@@ -6,7 +6,6 @@ export const Title = styled.h2`
 	align-items: center;
 	color: var(--title);
 	font-size: 2rem;
-	margin-bottom: ${props => props.marginBottom};
 	column-gap: 10px;
 
 	&::before {
@@ -96,7 +95,7 @@ export const TitleBox = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	margin-bottom: 20px;
+	margin-bottom: ${props => (props.icon === 'news' ? '40px' : '20px')};
 `;
 
 export const HeadTitle = styled.h3`
