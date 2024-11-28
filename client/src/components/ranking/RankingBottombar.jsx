@@ -1,7 +1,7 @@
 import * as R from 'style/components/ranking/RankingList.style';
 import RankingBoxItem from './RankingBoxItem';
 
-export default function RankingBottombar({ ranking, styles }) {
+export default function RankingBottombar({ ranking, styles, tagAs }) {
 	return (
 		<R.BottomBar>
 			{ranking &&

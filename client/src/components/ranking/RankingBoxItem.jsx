@@ -23,30 +23,24 @@ export default function RankingBoxItem({
 	};
 
 	return (
-		<R.RankBoxItem styleType={styleType}>
-			<R.RankInnerBox direction="column" seq>
-				<R.RankText styleType={styleType} styleProp="number" as={tagAs}>
-					{rank}
-				</R.RankText>
-				{gameRankUpDown === '' && sharesStatus === '' ? null : (
-					<R.RankStatus>
-						<R.RankText styleType={styleType} styleProp="icon">
-							{rankIconCondition(sharesStatus)}
-						</R.RankText>
-						<R.RankText styleType={styleType} styleProp="status">
-							{gameRankUpDown}
-						</R.RankText>
-					</R.RankStatus>
-				)}
-			</R.RankInnerBox>
-			<R.RankInnerBox direction="row">
-				<R.RankInnerBox styleType={styleType} direction="column">
-					<R.RankText as="h3" styleType={styleType} styleProp="gameName">
-						{title}
-					</R.RankText>
-					<RankingDataContainer styleType={styleType} shares={shares} useStoreCount={useStoreCount} />
-				</R.RankInnerBox>
-			</R.RankInnerBox>
-		</R.RankBoxItem>
+		<R.RankItem as={tagAs}>
+			<R.RankInnerBoxContainer styleType={styleType}>
+				<R.Seq>
+					<R.SeqText data-number={rank}>{rank}</R.SeqText>
+					{gameRankUpDown === '' && sharesStatus === '' ? null : (
+						<R.RankStatus>
+							<R.IconText>{rankIconCondition(sharesStatus)}</R.IconText>
+							<R.StatusText>{gameRankUpDown}</R.StatusText>
+						</R.RankStatus>
+					)}
+				</R.Seq>
+				<R.RankItemWrapper>
+					<R.RankItemBox>
+						<R.TitleText>{title}</R.TitleText>
+						<RankingDataContainer styleType={styleType} shares={shares} useStoreCount={useStoreCount} />
+					</R.RankItemBox>
+				</R.RankItemWrapper>
+			</R.RankInnerBoxContainer>
+		</R.RankItem>
 	);
 }

@@ -3,13 +3,7 @@ import * as B from 'style/common/Button.style';
 import RankingBoxItem from 'components/ranking/RankingBoxItem';
 import RankingBottombar from 'components/ranking/RankingBottombar';
 
-export default function RankingList({
-	ranking,
-	rankingFetchNextPage,
-	rankingHasNextPage,
-	rankingFetchingNextPage,
-	isBottombar = true,
-}) {
+export default function RankingList({ ranking, rankingFetchNextPage, rankingHasNextPage, rankingFetchingNextPage }) {
 	const styles = {
 		list: {
 			styleType: 'list',
@@ -19,10 +13,10 @@ export default function RankingList({
 		},
 	};
 
+	console.log(ranking);
+
 	return (
 		<R.RankWrap>
-			{isBottombar && <RankingBottombar ranking={ranking} styles={styles} />}
-
 			<R.RankList>
 				{ranking &&
 					ranking.pages.map(page => {
@@ -40,12 +34,15 @@ export default function RankingList({
 									shares={shares}
 									targetDate={targetDate}
 									useStoreCount={useStoreCount}
-									tagAs="strong"
+									tagAs="li"
 								/>
 							);
 						});
 					})}
 			</R.RankList>
+
+			<RankingBottombar ranking={ranking} styles={styles} tagAs="div" />
+
 			<R.RankButtonWrap>
 				<B.Button
 					type="button"

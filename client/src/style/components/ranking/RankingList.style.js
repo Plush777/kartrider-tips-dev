@@ -10,7 +10,6 @@ export const RankList = styled.ul`
 	row-gap: 12px;
 	overflow-y: auto;
 	max-height: var(--main-scroll-height);
-	padding-bottom: 70px;
 
 	${({ theme }) => theme.laptop`
         max-height: calc(var(--main-scroll-height) - 5px);
@@ -26,25 +25,18 @@ export const RankList = styled.ul`
     `};
 `;
 
-export const RankBoxItem = styled.li`
-	flex: 1;
+export const RankInnerBoxContainer = styled.div`
 	display: flex;
 	align-items: center;
-	padding: ${props => (props.styleType === 'bottom' ? '10px 20px' : '20px')};
-	border-radius: ${props => (props.styleType === 'bottom' ? '0 0 8px 8px' : '8px')};
-	background-color: var(--background5);
 	column-gap: 12px;
-	max-height: ${props => (props.styleType === 'bottom' ? '70px' : '100px')};
+	border-radius: 8px;
+	background-color: var(--background5);
+	padding: 20px;
+
+	max-height: ${props => (props.styleType === 'bottom' ? '70px' : '')};
 	transition: 0.3s ease-in-out;
 	transition-property: background-color;
-
-	${props =>
-		props.styleType === 'list' &&
-		css`
-			&:last-of-type {
-				border-radius: 8px 8px 0 0;
-			}
-		`}
+	height: 90px;
 
 	${({ theme }) => theme.laptop`
         padding: 12px;
@@ -52,66 +44,82 @@ export const RankBoxItem = styled.li`
     `};
 `;
 
-export const RankInnerBox = styled.div`
-	display: flex;
-	flex-direction: ${props => props.direction};
-
-	${props =>
-		props.direction === 'column' &&
-		!props.seq &&
-		css`
-			justify-content: center;
-
-			${props =>
-				props.styleType === 'bottom'
-					? css`
-							padding-left: 10px;
-						`
-					: css`
-							padding-left: 20px;
-						`}
-		`}
-
-	${props =>
-		props.seq &&
-		css`
-			min-width: 32px;
-			align-items: center;
-		`}
-
-    ${props =>
-		props.type === 'gameData' &&
-		props.direction === 'row' &&
-		css`
-			align-items: center;
-			column-gap: 5px;
-		`}
-
-    ${props =>
-		props.type === 'gameDataContainer' &&
-		css`
-			flex-wrap: wrap;
-			column-gap: 10px;
-		`}
-
-    ${props =>
-		props.direction === 'column' &&
-		!props.seq &&
-		css`
-			${({ theme }) => theme.laptop`
-            padding-left: 10px;
-        `};
-		`}
+export const DayoneInnerBoxContainer = styled(RankInnerBoxContainer)`
+	padding: 20px 0;
 `;
 
-export const RankImgBox = styled.div`
-	width: ${props => props.width};
-	height: ${props => props.height};
-	border-radius: 8px;
+export const Seq = styled.div`
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
 
-	img {
-		border-radius: 8px;
+	min-width: 32px;
+	height: 100%;
+	align-items: center;
+`;
+
+export const DayoneSeq = styled(Seq)`
+	min-width: 110px;
+`;
+
+export const SeqText = styled.strong`
+	font-size: 1.375rem;
+	color: var(--text1);
+
+	&:where([data-number='1'], [data-number='2'], [data-number='3']) {
+		color: var(--active);
 	}
+`;
+
+export const DayoneSeqText = styled(SeqText)``;
+
+export const StatusText = styled.span`
+	margin-left: 1.5px;
+	font-size: 0.8125rem;
+	color: var(--text1);
+`;
+
+export const IconText = styled.span`
+	font-size: 0.625rem;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.7px;
+`;
+
+export const TitleText = styled.h3`
+	font-size: 1.125rem;
+	color: var(--text1);
+	font-weight: 600;
+`;
+
+export const DataTitleText = styled.span`
+	font-size: 0.875rem;
+	color: var(--description);
+`;
+
+export const DataNumberText = styled.span`
+	font-size: 0.875rem;
+	color: var(--text1);
+`;
+
+export const RankItemDataBox = styled.div`
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	column-gap: 10px;
+`;
+
+export const RankItemDataInnerBox = styled.div`
+	display: flex;
+	align-items: center;
+	column-gap: 5px;
+`;
+
+export const DayoneInnerBox = styled.div`
+	display: flex;
+	align-items: center;
+	flex: 1;
+	padding-left: 10px;
 `;
 
 export const RankStatus = styled.div`
@@ -121,99 +129,47 @@ export const RankStatus = styled.div`
 	width: 100%;
 `;
 
-export const RankText = styled.span`
-	${props =>
-		props.styleProp === 'number' &&
-		css`
-			font-size: ${props => (props.styleType === 'bottom' ? '1.125rem' : '1.375rem')};
-			color: var(--text1);
+export const RankItem = styled.div`
+	flex: 1;
+`;
 
-			&:where([data-number='1'], [data-number='2'], [data-number='3']) {
-				color: var(--active);
-			}
-		`}
+export const RankItemWrapper = styled.div`
+	height: 100%;
+`;
 
-	${props =>
-		props.styleProp === 'status' &&
-		css`
-			margin-left: 1.5px;
-			font-size: ${props => (props.styleType === 'bottom' ? '.75rem' : '.8125rem')};
-			color: var(--text1);
-		`}
+export const DayoneItemWrapper = styled(RankItemWrapper)``;
 
-    ${props =>
-		props.styleProp === 'icon' &&
-		css`
-			font-size: 0.625rem;
-			font-weight: 600;
-			text-transform: uppercase;
-			letter-spacing: 0.7px;
-		`}
-    
-    ${props =>
-		props.styleProp === 'gameName' &&
-		css`
-			display: flex;
-			align-items: center;
-			font-size: ${props => (props.styleType === 'bottom' ? '1rem' : '1.125rem')};
-			color: var(--text1);
-			padding-bottom: ${props => (props.styleType === 'bottom' ? '5px' : '10px')};
-			font-weight: 600;
-		`}
+export const RankItemBox = styled.div`
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	padding-left: 20px;
+	height: 100%;
+`;
 
-    ${props =>
-		props.styleProp === 'gameDataTitle' &&
-		css`
-			font-size: ${props => (props.styleType === 'bottom' ? '.75rem' : '.875rem')};
-			color: var(--description);
-		`}
+export const DayoneRankTitleText = styled(TitleText)`
+	margin: 0 auto;
+`;
 
-    ${props =>
-		props.styleProp === 'gameData' &&
-		css`
-			font-size: ${props => (props.styleType === 'bottom' ? '.75rem' : '.875rem')};
-			color: var(--text1);
-		`}
-
-    ${({ theme }) => theme.mobile`
-        ${props =>
-					props.styleProp === 'gameName' &&
-					css`
-						font-size: 1rem;
-					`}
-
-    ${props =>
-			props.styleProp === 'number' &&
-			css`
-				font-size: 1.25rem;
-			`}
-    `};
+export const DayonePointText = styled(TitleText)`
+	min-width: 130px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 1.125rem;
+	color: var(--text1);
 `;
 
 export const BottomBar = styled.div`
-	position: absolute;
-	left: 0;
-	bottom: calc(40px + 20px);
 	width: calc(100% - 14px);
 	display: flex;
 	align-items: center;
 	column-gap: 20px;
-	border-radius: 0 0 8px 8px;
-	/* background-color: var(--background1); */
-	z-index: 990;
+	margin-top: 12px;
 
 	svg {
 		width: 8px;
 		height: 8px;
-	}
-
-	${RankBoxItem} {
-		max-height: 70px;
-		padding: 14px 20px;
-
-		${({ theme }) => theme.laptop`
-            padding: 12px;
-        `};
 	}
 
 	${({ theme }) => theme.tablet`
@@ -231,4 +187,33 @@ export const RankButtonWrap = styled.div`
 	display: flex;
 	align-items: center;
 	margin-top: 20px;
+`;
+
+export const RankTopBarWrapper = styled.header`
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+	margin-bottom: 10px;
+	padding: 15px 0;
+	border-radius: 8px;
+	background-color: var(--background5);
+	z-index: 100;
+`;
+
+export const RankTopBarText = styled.span`
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 1rem;
+	color: var(--text1);
+
+	&[data-index='1'] {
+		min-width: 110px;
+	}
+
+	&[data-index='3'] {
+		padding-right: 33px;
+		min-width: 130px;
+	}
 `;

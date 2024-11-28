@@ -1,11 +1,11 @@
 import * as M from 'style/components/main/Main.style';
 import MainTitle from 'components/title/MainTitle';
-import RankingList from 'components/ranking/RankingList';
 import VideoState from 'components/state/VideoState';
 import RankingSkeleton from 'components/skeleton/Ranking';
+import DayoneList from 'components/dayone/DayoneList';
 import { mainTitle } from 'const';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { fetchGameData } from 'scripts/api/ranking';
+import { fetchDayoneData } from 'scripts/api/ranking';
 
 export default function DayoneLayout() {
 	const {
@@ -17,7 +17,7 @@ export default function DayoneLayout() {
 		isFetchingNextPage: dayoneFetchingNextPage,
 	} = useInfiniteQuery({
 		queryKey: ['dayoneLists'],
-		queryFn: fetchGameData,
+		queryFn: fetchDayoneData,
 		initialPageParam: 1,
 		staleTime: 900000, // 15분
 		gcTime: 1800000, // 30분
@@ -32,12 +32,11 @@ export default function DayoneLayout() {
 		if (dayoneIsError) return <VideoState type="error" />;
 		if (!dayoneIsLoading && !dayoneIsError)
 			return (
-				<RankingList
+				<DayoneList
 					dayone={dayone}
 					dayoneFetchNextPage={dayoneFetchNextPage}
 					dayoneHasNextPage={dayoneHasNextPage}
 					dayoneFetchingNextPage={dayoneFetchingNextPage}
-					isBottombar={false}
 				/>
 			);
 	};

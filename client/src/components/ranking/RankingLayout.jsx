@@ -5,7 +5,7 @@ import VideoState from 'components/state/VideoState';
 import RankingSkeleton from 'components/skeleton/Ranking';
 import { mainTitle } from 'const';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { fetchGameData, fetchGameImages } from 'scripts/api/ranking';
+import { fetchGameData } from 'scripts/api/ranking';
 
 export default function RankingLayout() {
 	const {
@@ -27,26 +27,6 @@ export default function RankingLayout() {
 		},
 	});
 
-	const {
-		data: images,
-		isError: imagesIsError,
-		fetchNextPage: imagesFetchNextPage,
-	} = useInfiniteQuery({
-		queryKey: ['imagesLists'],
-		queryFn: fetchGameImages,
-		initialPageParam: 1,
-		staleTime: 24 * 60 * 60 * 1000, // 24시간
-		cacheTime: 7 * 24 * 60 * 60 * 1000, // 7일
-		getNextPageParam: (lastPage, pages) => {
-			console.log(lastPage.nextCursor);
-			return lastPage.nextCursor;
-		},
-		enabled: !!ranking,
-	});
-
-	// console.log(ranking);
-	console.log(images);
-
 	const renderRankLingList = () => {
 		if (rankingIsLoading && !rankingIsError) return <RankingSkeleton />;
 		if (rankingIsError) return <VideoState type="error" />;
@@ -57,9 +37,6 @@ export default function RankingLayout() {
 					rankingFetchNextPage={rankingFetchNextPage}
 					rankingHasNextPage={rankingHasNextPage}
 					rankingFetchingNextPage={rankingFetchingNextPage}
-					images={images}
-					imagesFetchNextPage={imagesFetchNextPage}
-					imageIsError={imagesIsError}
 				/>
 			);
 	};

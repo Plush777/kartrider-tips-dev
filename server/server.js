@@ -406,6 +406,9 @@ async function crawlRankingData({ mode, team, pointId, cursor = 1 }) {
     const data = await page.evaluate(() => {
       return Array.from(document.querySelectorAll(".board_list li")).map(
         (item) => ({
+          rank:
+            item.querySelector("[class*='do_n']")?.textContent.trim() ||
+            undefined,
           name: item.querySelector(".do_tit")?.textContent.trim() || undefined,
           score: item.querySelector(".do_p")?.textContent.trim() || undefined,
         })
