@@ -1,55 +1,53 @@
 import * as Sk from 'style/layout/Skeleton.style';
-import { styles } from 'const';
 
 export default function Ranking() {
-    const { styleType, imageSize } = styles.skeleton.ranking.propsObject;
+	return (
+		<Sk.RankWrap>
+			<Sk.RankList>
+				{Array.from({ length: 5 }).map((_, index) => {
+					return (
+						<Sk.RankItem key={index}>
+							<Sk.RankSeq>
+								<Sk.RankSeqText />
+								<Sk.RankStatus />
+							</Sk.RankSeq>
+							<Sk.RankInnerBox>
+								<Sk.RankInnerColumnBox>
+									<Sk.RankTitleText />
+									<Sk.RankInnerRowBox>
+										<Sk.RankDataBox />
+										<Sk.RankDataBox />
+										<Sk.RankDataBox />
+										<Sk.RankDataBox />
+									</Sk.RankInnerRowBox>
+								</Sk.RankInnerColumnBox>
+							</Sk.RankInnerBox>
+						</Sk.RankItem>
+					);
+				})}
+			</Sk.RankList>
 
-    return (
-        <Sk.Wrap>
-            <Sk.RankBottomBar>
-                <Sk.RankItem styleType={styleType.bottom}>
-                    <Sk.RankInnerBox styleType={styleType.bottom} direction="column" seq>
-                        <Sk.RankText styleType={styleType.bottom} styleProp="number"/>
-                        <Sk.RankStatus />
-                    </Sk.RankInnerBox>
-                    <Sk.RankInnerBox direction="row" styleType={styleType.bottom}>
-                        <Sk.RankImgBox width={imageSize.small.width} height={imageSize.small.height} />
-                        <Sk.RankInnerBox styleType={styleType.bottom} direction="column">
-                            <Sk.RankText styleType={styleType.bottom} styleProp="gameName" />
-                            <Sk.RankInnerBox direction="row" type="gameDataContainer">
-                                <Sk.RankInnerBox direction="row" type="gameData" />
-                                <Sk.RankInnerBox direction="row" type="gameData" />
-                            </Sk.RankInnerBox>
-                        </Sk.RankInnerBox>
-                    </Sk.RankInnerBox>
-                </Sk.RankItem>
-            </Sk.RankBottomBar>
+			<Sk.BottomBar>
+				<Sk.BottombarRankItem>
+					<Sk.BottombarRankSeq>
+						<Sk.BottombarRankSeqText />
+						<Sk.RankStatus />
+					</Sk.BottombarRankSeq>
+					<Sk.BottombarRankInnerBox>
+						<Sk.BottombarRankInnerColumnBox>
+							<Sk.BottomBarRankTitleText />
+							<Sk.BottombarRankInnerRowBox>
+								<Sk.BottombarRankDataBox />
+								<Sk.BottombarRankDataBox />
+								<Sk.BottombarRankDataBox />
+								<Sk.BottombarRankDataBox />
+							</Sk.BottombarRankInnerRowBox>
+						</Sk.BottombarRankInnerColumnBox>
+					</Sk.BottombarRankInnerBox>
+				</Sk.BottombarRankItem>
+			</Sk.BottomBar>
 
-            <Sk.RankList>
-                {Array.from({ length: 4 }).map((_, index) => {
-                    return (
-                        <Sk.RankItem key={index}>
-                            <Sk.RankInnerBox direction="column" seq>
-                                <Sk.RankText styleType={styleType.list} styleProp="number"/>
-                                <Sk.RankStatus />
-                            </Sk.RankInnerBox>
-                            <Sk.RankInnerBox direction="row">
-                                <Sk.RankImgBox width={imageSize.wide.width} height={imageSize.wide.height} />
-
-                                <Sk.RankInnerBox styleType={styleType.list} direction="column">
-                                    <Sk.RankText styleType={styleType.list} styleProp="gameName" />
-                                        <Sk.RankInnerBox direction="row" type="gameDataContainer">
-                                            <Sk.RankInnerBox direction="row" type="gameData" />
-                                            <Sk.RankInnerBox direction="row" type="gameData" />
-                                        </Sk.RankInnerBox>
-                                </Sk.RankInnerBox>
-                            </Sk.RankInnerBox>
-                        </Sk.RankItem>
-                    )})
-                }
-            </Sk.RankList>
-            
-            <Sk.RankButtonWrap />
-        </Sk.Wrap>
-    )
+			<Sk.RankButtonWrap />
+		</Sk.RankWrap>
+	);
 }

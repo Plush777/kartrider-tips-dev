@@ -2,12 +2,7 @@ import styled, { css } from 'styled-components';
 
 export const MainInner = styled.article`
 	position: relative;
-
-	${props =>
-		props.name === 'ranking' &&
-		css`
-			min-height: var(--main-scroll-height);
-		`}
+	height: 100%;
 
 	${props =>
 		props.name === 'news' &&
@@ -15,7 +10,7 @@ export const MainInner = styled.article`
 			min-height: var(--mainHeightNews);
 		`}
 
-    ${props =>
+	${props =>
 		props.name === 'chzzk' &&
 		css`
 			height: 383px;
@@ -54,14 +49,41 @@ export const MainComponentBox = styled.section`
 
 export const ContainerBox = styled.article`
 	position: relative;
-	flex: 0.5;
 	display: flex;
 	flex-direction: column;
-	justify-content: ${props => props.justify};
+
+	${props =>
+		props.both &&
+		css`
+			flex: 0.5;
+		`}
+
+	${({ theme }) => theme.laptop`
+		flex-direction: column;
+		column-gap: 0;
+		
+		& + & {
+			margin-top: var(--section-gap);
+		}
+    `};
 
 	${({ theme }) => theme.tablet`
         flex: none;
         width: 100%;
+
+		& +& {
+			margin-top: calc(var(--section-gap) / 2 + 20px);
+		}
+    `};
+
+	${({ theme }) => theme.mobile`
+     
+    `};
+
+	${({ theme }) => theme.small`
+		&+& {
+			margin-top: calc(var(--section-gap) / 2);
+		}
     `};
 `;
 

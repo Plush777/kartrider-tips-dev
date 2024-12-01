@@ -1,5 +1,5 @@
 import RecommendYoutubeList from 'components/recommend/RecommendYoutubeList';
-import VideoState from 'components/state/VideoState';
+import State from 'components/state/State';
 import * as M from 'style/components/main/Main.style';
 import MainTitle from 'components/title/MainTitle';
 import { mainTitle } from 'const';
@@ -17,9 +17,11 @@ export default function RecommendLayout({ data, isLoading, isError }) {
 			<MainTitle icon="fire" title={mainTitle.recommend} />
 
 			<M.MainInner name="recommend">
-				{isError && <VideoState type="error" />}
+				{isError && <State type="error" />}
 
 				{isLoading ? <CardSkeleton length={6} /> : <RecommendYoutubeList data={sortedVideo} isLoading={isLoading} />}
+
+				<CardSkeleton length={6} />
 			</M.MainInner>
 		</M.MainComponentBox>
 	);

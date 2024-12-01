@@ -26,38 +26,31 @@ export default function DayoneList({ dayone, dayoneFetchNextPage, dayoneHasNextP
 
 	return (
 		<R.RankWrap>
-			<RankingTopBar topbarText={topbarText} />
-			<R.RankList>
-				{dayone &&
-					dayone.pages.map(page => {
-						return page.result?.map((result, index) => {
-							const { rank, name, score } = result;
+			<R.RankInner>
+				<RankingTopBar topbarText={topbarText} />
+				<R.RankList scrollHeight="calc(100vh - 384px)">
+					{dayone &&
+						dayone.pages.map(page => {
+							return page.result?.map((result, index) => {
+								const { rank, name, score } = result;
 
-							return (
-								<DayoneBoxItem
-									key={index}
-									styleType={styles.list.styleType}
-									rank={rank}
-									username={name}
-									point={score}
-									tagAs="strong"
-								/>
-							);
-						});
-					})}
-			</R.RankList>
-			<R.RankButtonWrap>
-				<B.Button
-					type="button"
-					typeProp="rank"
-					disabled={dayoneFetchingNextPage || !dayoneHasNextPage ? true : false}
-					onClick={() => {
-						dayoneFetchNextPage();
-					}}
-				>
-					더보기
-				</B.Button>
-			</R.RankButtonWrap>
+								return <DayoneBoxItem key={index} rank={rank} username={name} point={score} tagAs="strong" />;
+							});
+						})}
+				</R.RankList>
+				<R.RankButtonWrap>
+					<B.Button
+						type="button"
+						typeProp="rank"
+						disabled={dayoneFetchingNextPage || !dayoneHasNextPage ? true : false}
+						onClick={() => {
+							dayoneFetchNextPage();
+						}}
+					>
+						더보기
+					</B.Button>
+				</R.RankButtonWrap>
+			</R.RankInner>
 		</R.RankWrap>
 	);
 }

@@ -1,7 +1,7 @@
 'use client';
 
 import ChzzkLiveList from 'components/chzzk/ChzzkLiveList';
-import VideoState from 'components/state/VideoState';
+import State from 'components/state/State';
 import LoadingSpinner from 'components/loading/LoadingSpinner';
 import * as M from 'style/components/main/Main.style';
 import * as B from 'style/common/Button.style';
@@ -76,7 +76,7 @@ export default function ChzzkLiveLayout() {
 	const renderEmpty = () => {
 		if (chzzk) {
 			if (chzzk.pages[0].length === 0) {
-				return <VideoState type="empty" emptyText={message.empty} />;
+				return <State type="empty" componentRole="live" />;
 			}
 		}
 	};
@@ -110,7 +110,7 @@ export default function ChzzkLiveLayout() {
 			/>
 
 			<M.MainInner name="chzzk">
-				{chzzkError && <VideoState type="error" />}
+				{chzzkError && <State type="error" componentRole="live" />}
 				{renderLiveList()}
 				{chzzkFetchingNextPage && <LoadingSpinner type="chzzk" />}
 				{renderEmpty()}

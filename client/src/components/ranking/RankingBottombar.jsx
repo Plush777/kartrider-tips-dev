@@ -1,7 +1,7 @@
 import * as R from 'style/components/ranking/RankingList.style';
 import RankingBoxItem from './RankingBoxItem';
 
-export default function RankingBottombar({ ranking, styles, tagAs }) {
+export default function RankingBottombar({ ranking, styles }) {
 	return (
 		<R.BottomBar>
 			{ranking &&
@@ -22,7 +22,7 @@ export default function RankingBottombar({ ranking, styles, tagAs }) {
 								shares={shares}
 								targetDate={targetDate}
 								useStoreCount={useStoreCount}
-								tagAs="div"
+								roleProps="bottom"
 							/>
 						);
 					});

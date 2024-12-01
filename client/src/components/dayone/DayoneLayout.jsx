@@ -1,7 +1,7 @@
 import * as M from 'style/components/main/Main.style';
 import MainTitle from 'components/title/MainTitle';
-import VideoState from 'components/state/VideoState';
-import RankingSkeleton from 'components/skeleton/Ranking';
+import State from 'components/state/State';
+import DayoneSkeleton from 'components/skeleton/Dayone';
 import DayoneList from 'components/dayone/DayoneList';
 import { mainTitle } from 'const';
 import { useInfiniteQuery } from '@tanstack/react-query';
@@ -19,8 +19,8 @@ export default function DayoneLayout() {
 		queryKey: ['dayoneLists'],
 		queryFn: fetchDayoneData,
 		initialPageParam: 1,
-		staleTime: 900000, // 15분
-		gcTime: 1800000, // 30분
+		staleTime: 1000 * 60 * 60 * 23, // 23시간
+		gcTime: 1000 * 60 * 60 * 25, // 25시간
 		getNextPageParam: (lastPage, pages) => {
 			console.log(lastPage.nextCursor);
 			return lastPage.nextCursor;
@@ -28,8 +28,8 @@ export default function DayoneLayout() {
 	});
 
 	const renderRankLingList = () => {
-		if (dayoneIsLoading && !dayoneIsError) return <RankingSkeleton />;
-		if (dayoneIsError) return <VideoState type="error" />;
+		if (dayoneIsLoading && !dayoneIsError) return <DayoneSkeleton />;
+		if (dayoneIsError) return <State type="error" />;
 		if (!dayoneIsLoading && !dayoneIsError)
 			return (
 				<DayoneList
@@ -42,9 +42,10 @@ export default function DayoneLayout() {
 	};
 
 	return (
-		<M.ContainerBox>
+		<M.ContainerBox both>
 			<MainTitle icon="blockRanking" title={mainTitle.dayone} />
 			<M.MainInner name="ranking">{renderRankLingList()}</M.MainInner>
+			<DayoneSkeleton />
 		</M.ContainerBox>
 	);
 }

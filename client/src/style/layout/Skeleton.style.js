@@ -1,5 +1,4 @@
 import styled, { css } from 'styled-components';
-import { styles } from 'const';
 
 export const Item = styled.div`
 	display: flex;
@@ -26,6 +25,10 @@ export const Bottom = styled(Top)``;
 
 /* ------------- Rank Component ------------- */
 
+export const RankWrap = styled.div`
+	position: relative;
+`;
+
 export const Wrap = styled.div`
 	position: relative;
 
@@ -43,99 +46,69 @@ export const Wrap = styled.div`
 				max-height: 40px;
 			}
 		`}
-
-	${props =>
-		props.type === 'ranking' &&
-		css`
-			${css(styles.skeleton.ranking.wrap.properties)}
-		`}
-
-    ${props => props.type === 'card' && css``}
 `;
 
 export const RankList = styled.div`
-	${css(styles.skeleton.ranking.list.properties)}
+	display: flex;
+	flex-direction: column;
+	row-gap: 12px;
 `;
 
 export const RankItem = styled.div`
-	${css(styles.skeleton.ranking.item.properties)}
-	${css(styles.skeleton.ranking.item.pseudo)}
-
-    ${props =>
-		props.styleType === 'bottom' &&
-		css`
-			height: 70px;
-			padding: 10px 20px;
-		`}
-
-    ${({ theme }) => theme.laptop`
-        ${css(styles.skeleton.ranking.item.mobile.laptop)}
-    `};
+	width: calc(100% - 14px);
+	height: 90px;
+	flex: 1;
+	display: flex;
+	align-items: center;
+	padding: 20px;
+	border-radius: 8px;
+	background-color: var(--background5);
+	column-gap: 12px;
+	transition: 0.3s ease-in-out;
+	transition-property: background-color;
 `;
 
 export const RankInnerBox = styled.div`
-	${css(styles.skeleton.ranking.innerBox.properties)}
-	flex-direction: ${props => props.direction};
+	display: flex;
+	flex: 1;
+`;
 
-	${props =>
-		props.direction === 'row' &&
-		!props.type &&
-		css`
-			flex: 1;
-		`}
+export const RankSeq = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	min-width: 32px;
+	height: 100%;
+	row-gap: 7px;
+`;
 
-	${props =>
-		props.direction === 'row' &&
-		props.type === 'gameDataContainer' &&
-		css`
-			min-width: 210px;
-			border-radius: 4px;
-			flex-wrap: wrap;
-			${css(styles.skeleton.ranking.innerBox.props.type.gameDataContainer)}
-		`}
+export const RankInnerColumnBox = styled.div`
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+	padding-left: 20px;
+	row-gap: 7px;
 
-    ${props =>
-		props.direction === 'row' &&
-		props.type === 'gameData' &&
-		css`
-			height: ${props => (props.styleType === 'bottom' ? '15px' : '18px')};
-			column-gap: 5px;
-			background-color: var(--skeleton-background);
-			flex: 1;
-			border-radius: 4px;
-		`}
+	${({ theme }) => theme.laptop`
+		padding-left: 10px;
+	`};
+`;
 
-    ${props =>
-		props.direction === 'row' &&
-		!props.seq &&
-		props.styleType === 'bottom' &&
-		!props.type &&
-		css`
-			height: 100%;
-		`}
+export const RankInnerRowBox = styled.div`
+	display: flex;
+	align-items: center;
+	min-width: 210px;
+	border-radius: 4px;
+	flex-wrap: wrap;
+	column-gap: 10px;
+`;
 
-    ${props =>
-		props.direction === 'column' &&
-		props.seq &&
-		css`
-			justify-content: space-between;
-			height: ${props => (props.styleType === 'bottom' ? '100%' : '64px')};
-		`}
-
-    ${props =>
-		props.direction === 'column' &&
-		!props.seq &&
-		css`
-			${css(styles.skeleton.ranking.innerBox.props.flexDirection.column.noSeq)}
-			flex: 1;
-			height: ${props => (props.styleType === 'bottom' ? '100%' : '')};
-			justify-content: space-between;
-			${css(styles.skeleton.ranking.innerBox.props.styleType.default)}
-
-			${({ theme }) => theme.laptop`
-            padding-left: 10px;
-        `};
-		`}
+export const RankDataBox = styled.div`
+	height: 18px;
+	column-gap: 5px;
+	background-color: var(--skeleton-background);
+	flex: 0.2;
+	border-radius: 4px;
 `;
 
 export const RankImgBox = styled.div`
@@ -146,177 +119,324 @@ export const RankImgBox = styled.div`
 `;
 
 export const RankStatus = styled.div`
-	${css(styles.skeleton.ranking.status)}
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	width: 32px;
 	height: ${props => (props.styleType === 'bottom' ? '14px' : '16px')};
 	border-radius: 4px;
 	background-color: var(--skeleton-background);
 `;
 
-export const RankText = styled.div`
-	${props =>
-		props.styleProp === 'number' &&
-		css`
-			max-width: 32px;
-			height: ${props => (props.styleType === 'bottom' ? '26px' : '37px')};
-			border-radius: 4px;
-			background-color: var(--skeleton-background);
-		`}
+export const RankSeqText = styled.div`
+	min-width: inherit;
+	height: 27px;
+	border-radius: 4px;
+	background-color: var(--skeleton-background);
+`;
 
-	${props =>
-		props.styleProp === 'title' &&
-		css`
-			height: ${props => (props.styleType === 'bottom' ? '24px' : '32px')};
-			border-radius: 4px;
-			background-color: var(--skeleton-background);
+export const BottombarRankNumberText = styled(RankSeqText)`
+	height: 26px;
+`;
 
-			${css(styles.skeleton.ranking.rankText.props.gameName.properties)}
-		`}
+export const RankTitleText = styled.div`
+	width: 30%;
+	height: 22px;
+	border-radius: 4px;
+	background-color: var(--skeleton-background);
+	display: flex;
+	align-items: center;
 
-    ${({ theme }) => theme.mobile`
-        ${props =>
-					props.styleProp === 'title' &&
-					css`
-						${css(styles.skeleton.ranking.rankText.props.mobile.mobile.gameName)}
-					`}
+	${({ theme }) => theme.mobile`
+		padding-left: 15px;
     `};
 `;
 
-export const RankBottomBar = styled.div`
-	${css(styles.skeleton.ranking.BottomBar.properties)}
-
-	${RankItem} {
-		${css(styles.skeleton.ranking.BottomBar.children.rankBoxItem)}
-	}
-
-	${({ theme }) => theme.tablet`
-        ${css(styles.skeleton.ranking.BottomBar.mobile.tablet.properties)}
-    `};
+export const BottomBar = styled.div`
+	width: calc(100% - 14px);
+	height: 76px;
+	display: flex;
+	align-items: center;
+	column-gap: 20px;
+	margin-top: 12px;
 `;
+
+export const BottomBarRankTitleText = styled(RankTitleText)``;
 
 export const RankButtonWrap = styled.div`
-	width: 100%;
+	width: calc(100% - 14px);
 	height: 40px;
-	${css(styles.skeleton.ranking.ButtonWrap.properties)}
+	display: flex;
+	align-items: center;
+	margin-top: 20px;
 	border-radius: 4px;
 	background-color: var(--background5);
 `;
-/* ------------- //Rank Component ------------- */
+
+export const BottombarRankSeq = styled(RankSeq)`
+	row-gap: 3px;
+`;
+
+export const BottombarRankSeqText = styled(RankSeqText)``;
+
+export const BottombarRankInnerBox = styled.div`
+	display: flex;
+	height: 100%;
+	flex: 1;
+`;
+
+export const BottombarRankInnerRowBox = styled(RankInnerRowBox)``;
+
+export const BottombarRankInnerColumnBox = styled(RankInnerColumnBox)`
+	row-gap: 3px;
+`;
+
+export const BottombarRankDataBox = styled(RankDataBox)``;
+
+export const BottombarRankItem = styled(RankItem)`
+	padding: 13.5px 20px;
+	height: auto;
+`;
+
+export const DayoneWrap = styled(RankWrap)``;
+
+export const DayoneList = styled(RankList)``;
+
+export const DayoneItem = styled(RankItem)`
+	flex: none;
+	padding: 20px 0;
+`;
+
+export const DayoneLastItem = styled(DayoneItem)`
+	height: 17px;
+	border-radius: 8px 8px 0 0;
+	padding: 0;
+`;
+
+export const DayoneTopBarWrapper = styled.div`
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+	height: 49px;
+	margin-bottom: 10px;
+	padding: 15px 0;
+	border-radius: 8px;
+	background-color: var(--background5);
+`;
+
+export const DayoneTopbarText = styled.div`
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 1rem;
+	color: var(--text1);
+`;
+
+export const DayoneText1Box = styled.div`
+	display: flex;
+	max-width: 110px;
+	flex: 1;
+`;
+
+export const DayoneText1 = styled.div`
+	flex: 0.5;
+	height: 27px;
+	border-radius: 4px;
+	margin: 0 auto;
+	background-color: var(--skeleton-background);
+`;
+
+export const DayoneText2 = styled(DayoneText1)`
+	flex: 1;
+`;
+
+export const DayoneText3 = styled(DayoneText1)`
+	flex: 0.5;
+`;
+
+export const DayoneText2Box = styled(DayoneText1Box)`
+	display: flex;
+	max-width: none;
+`;
+
+export const DayoneText3Box = styled(DayoneText1Box)`
+	display: flex;
+	max-width: 130px;
+`;
+
+export const DayoneSeqText = styled(RankSeqText)``;
+
+export const DayoneTitleText = styled(RankTitleText)`
+	width: auto;
+	flex: 1;
+`;
+
+export const DayonePointText = styled(DayoneTitleText)`
+	max-width: 130px;
+`;
 
 /* ------------- Card Component ------------- */
 
-//MainInner (Main.style.js)
 export const CardInner = styled.div`
-	${css(styles.skeleton.card.mainInner.properties)}
-	${css(styles.skeleton.card.mainInner.props.season.properties)}
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
 
-    ${({ theme }) => theme.tablet`
-        ${css(styles.skeleton.card.mainInner.mobile.tablet.props.season.properties)}
-        ${css(styles.skeleton.card.mainInner.mobile.tablet.props.ranking.properties)}
-    `};
+	${({ theme }) => theme.tablet`
+		height: 170px;
+		height: 475px;
+	`};
 `;
 
 export const CardHead = styled.div`
-	${css(styles.skeleton.card.head.properties)}
+	margin-top: 20px;
 	width: 70%;
 	height: 29px;
 	border-radius: 4px;
 	background-color: var(--skeleton);
 
 	${({ theme }) => theme.laptop`
-        ${css(styles.skeleton.card.head.mobile.laptop.properties)}
-    `};
+		height: 27px;
+	`};
 
 	${({ theme }) => theme.tablet`
-        ${css(styles.skeleton.card.head.mobile.tablet.properties)}
-    `};
+		margin-top: 12px;
+	`};
 `;
 
 export const CardBottom = styled.div`
-	${css(styles.skeleton.card.bottom.properties)}
+	margin-top: 10px;
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	row-gap: 5px;
 	width: 50%;
 	height: 24px;
 	border-radius: 4px;
 	background-color: var(--skeleton);
 
 	@media screen and (max-width: 1200px) {
-		${css(styles.skeleton.card.bottom.mobile[1200].properties)}
+		flex-direction: column;
+		align-items: flex-start;
 	}
 
 	${({ theme }) => theme.laptop`
-        ${css(styles.skeleton.card.bottom.mobile.laptop.properties)}
-    `};
+		height: 22px;
+		flex-direction: row;
+		row-gap: 0;
+	`};
 
 	${({ theme }) => theme.tablet`
-        ${css(styles.skeleton.card.bottom.mobile.tablet.properties)}
-    `};
+		margin-top: 8px;
+	`};
 `;
 
 export const CardGroup = styled.div`
-	${css(styles.skeleton.card.group.properties)}
-	${css(styles.skeleton.card.group.adjacent)}
-    display: ${props => props.display};
+	display: flex;
+	column-gap: 20px;
+	height: 100%;
+	display: ${props => props.display};
 	grid-template-columns: ${props => props.gtc};
 	row-gap: ${props => props.rg};
 
+	& + & {
+		margin-top: 60px;
+	}
+
 	${({ theme }) => theme.laptop`
-        ${css(styles.skeleton.card.group.mobile.laptop.properties)}
-    `};
+		flex-direction: column;
+		row-gap: 40px;
+		grid-template-columns: 1fr;
+	`};
 `;
 
 export const CardItem = styled.div`
-	${css(styles.skeleton.card.item.properties)}
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
 
 	${({ theme }) => theme.laptop`
-        ${css(styles.skeleton.card.item.mobile.laptop.properties)}
-    `};
+		flex: none;
+		width: 100%;
+		height: auto;
+	`};
 `;
 
 export const CardThumbnailWrapper = styled.div`
-	${css(styles.skeleton.card.thumbnailWrapper.properties)}
+	position: relative;
+	display: flex;
 `;
 
 export const CardThumbnail = styled.div`
-	${css(styles.skeleton.card.thumbnail.properties)}
+	flex: 1;
+	padding-top: 56.19%;
+	border-radius: 8px;
+	background-color: var(--skeleton);
 `;
 
-// Title (Title.style.js)
 export const CardTitleText = styled.div`
-	${css(styles.skeleton.card.title.titleText.properties)}
+	position: relative;
+	display: flex;
+	align-items: center;
 
 	${({ theme }) => theme.laptop`
-        ${css(styles.skeleton.card.title.titleText.mobile.laptop.pseudo)}
-    `};
+		&::before {
+			width: 32px;
+			height: 32px;
+			background-size: 32px;
+		}
+	`};
 
 	${({ theme }) => theme.tablet`
-         ${css(styles.skeleton.card.title.titleText.mobile.tablet.pseudo)}
-    `};
+		&::before {
+			width: 26px;
+			height: 26px;
+			background-size: 26px;
+		}
+	`};
 
 	${({ theme }) => theme.mobile`
-        ${css(styles.skeleton.card.title.titleText.mobile.mobile.properties)}
-    `};
+		flex-direction: column;
+	`};
 `;
 
 export const CardButtonWrap = styled.div`
-	${css(styles.skeleton.card.buttons.btnWrap.properties)}
+	position: relative;
+	height: 40px;
+	margin-top: 30px;
+	z-index: 10;
 `;
 
 export const CardButtonArea = styled.div`
-	${css(styles.skeleton.card.buttons.btnArea.properties)}
+	display: flex;
+	justify-content: center;
+	width: 100%;
 `;
 
 export const CardVideoInfo = styled.div`
 	width: 48px;
-
-	${css(styles.skeleton.card.videoInfo.infoBox.properties)}
+	position: absolute;
+	display: flex;
+	justify-content: center;
+	margin: 16px;
+	height: 20px;
+	border-radius: 6px;
+	background-color: var(--skeleton-background);
+	z-index: 100;
 
 	${({ theme }) => theme.tablet`
-        ${css(styles.skeleton.card.videoInfo.infoBox.mobile.tablet.properties)}
-    `};
+		margin: 12px;
+		height: 18px;
+		line-height: 21px;
+		border-radius: 4px;
+		padding: 0 6.5px;
+	`};
 
 	${({ theme }) => theme.mobile`
-        ${css(styles.skeleton.card.videoInfo.infoBox.mobile.mobile.properties)}
-    `};
+		margin: 12px 10px;
+		padding: 0 5px;
+	`};
 `;
-
-/* ------------- //Card Component ------------- */

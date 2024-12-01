@@ -13,6 +13,7 @@ export default function RankingBoxItem({
 	shares,
 	useStoreCount,
 	tagAs,
+	roleProps,
 }) {
 	const rankIconCondition = data => {
 		if (data) {
@@ -22,25 +23,49 @@ export default function RankingBoxItem({
 		}
 	};
 
-	return (
-		<R.RankItem as={tagAs}>
-			<R.RankInnerBoxContainer styleType={styleType}>
-				<R.Seq>
-					<R.SeqText data-number={rank}>{rank}</R.SeqText>
-					{gameRankUpDown === '' && sharesStatus === '' ? null : (
-						<R.RankStatus>
-							<R.IconText>{rankIconCondition(sharesStatus)}</R.IconText>
-							<R.StatusText>{gameRankUpDown}</R.StatusText>
-						</R.RankStatus>
-					)}
-				</R.Seq>
-				<R.RankItemWrapper>
-					<R.RankItemBox>
-						<R.TitleText>{title}</R.TitleText>
-						<RankingDataContainer styleType={styleType} shares={shares} useStoreCount={useStoreCount} />
-					</R.RankItemBox>
-				</R.RankItemWrapper>
-			</R.RankInnerBoxContainer>
-		</R.RankItem>
-	);
+	const renderItem = () => {
+		if (roleProps === 'bottom') {
+			return (
+				<R.BottombarInnerBoxContainer>
+					<R.BottombarSeq>
+						<R.BottombarSeqText data-number={rank}>{rank}</R.BottombarSeqText>
+						{gameRankUpDown === '' && sharesStatus === '' ? null : (
+							<R.RankStatus>
+								<R.IconText>{rankIconCondition(sharesStatus)}</R.IconText>
+								<R.StatusText>{gameRankUpDown}</R.StatusText>
+							</R.RankStatus>
+						)}
+					</R.BottombarSeq>
+					<R.BottombarWrapper>
+						<R.RankItemBox>
+							<R.TitleText>{title}</R.TitleText>
+							<RankingDataContainer styleType={styleType} shares={shares} useStoreCount={useStoreCount} />
+						</R.RankItemBox>
+					</R.BottombarWrapper>
+				</R.BottombarInnerBoxContainer>
+			);
+		} else {
+			return (
+				<R.RankInnerBoxContainer>
+					<R.Seq>
+						<R.SeqText data-number={rank}>{rank}</R.SeqText>
+						{gameRankUpDown === '' && sharesStatus === '' ? null : (
+							<R.RankStatus>
+								<R.IconText>{rankIconCondition(sharesStatus)}</R.IconText>
+								<R.StatusText>{gameRankUpDown}</R.StatusText>
+							</R.RankStatus>
+						)}
+					</R.Seq>
+					<R.RankItemWrapper>
+						<R.RankItemBox>
+							<R.TitleText>{title}</R.TitleText>
+							<RankingDataContainer styleType={styleType} shares={shares} useStoreCount={useStoreCount} />
+						</R.RankItemBox>
+					</R.RankItemWrapper>
+				</R.RankInnerBoxContainer>
+			);
+		}
+	};
+
+	return <R.RankItem as={tagAs}>{renderItem()}</R.RankItem>;
 }

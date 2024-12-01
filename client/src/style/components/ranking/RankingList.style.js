@@ -4,16 +4,14 @@ export const RankWrap = styled.div`
 	position: relative;
 `;
 
+export const RankInner = styled.div``;
+
 export const RankList = styled.ul`
 	display: flex;
 	flex-direction: column;
 	row-gap: 12px;
 	overflow-y: auto;
-	max-height: var(--main-scroll-height);
-
-	${({ theme }) => theme.laptop`
-        max-height: calc(var(--main-scroll-height) - 5px);
-    `};
+	height: ${props => props.scrollHeight};
 
 	${({ theme }) => theme.tablet`
         &::-webkit-scrollbar {
@@ -32,27 +30,24 @@ export const RankInnerBoxContainer = styled.div`
 	border-radius: 8px;
 	background-color: var(--background5);
 	padding: 20px;
-
-	max-height: ${props => (props.styleType === 'bottom' ? '70px' : '')};
 	transition: 0.3s ease-in-out;
 	transition-property: background-color;
 	height: 90px;
-
-	${({ theme }) => theme.laptop`
-        padding: 12px;
-        column-gap: 12px;
-    `};
 `;
 
 export const DayoneInnerBoxContainer = styled(RankInnerBoxContainer)`
 	padding: 20px 0;
 `;
 
+export const BottombarInnerBoxContainer = styled(RankInnerBoxContainer)`
+	padding: 13.5px 20px;
+	height: auto;
+`;
+
 export const Seq = styled.div`
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-
 	min-width: 32px;
 	height: 100%;
 	align-items: center;
@@ -61,6 +56,8 @@ export const Seq = styled.div`
 export const DayoneSeq = styled(Seq)`
 	min-width: 110px;
 `;
+
+export const BottombarSeq = styled(Seq)``;
 
 export const SeqText = styled.strong`
 	font-size: 1.375rem;
@@ -72,6 +69,8 @@ export const SeqText = styled.strong`
 `;
 
 export const DayoneSeqText = styled(SeqText)``;
+
+export const BottombarSeqText = styled(SeqText)``;
 
 export const StatusText = styled.span`
 	margin-left: 1.5px;
@@ -122,6 +121,8 @@ export const DayoneInnerBox = styled.div`
 	padding-left: 10px;
 `;
 
+export const BottombarInnerBox = styled(RankItemDataInnerBox)``;
+
 export const RankStatus = styled.div`
 	display: flex;
 	align-items: center;
@@ -139,16 +140,23 @@ export const RankItemWrapper = styled.div`
 
 export const DayoneItemWrapper = styled(RankItemWrapper)``;
 
+export const BottombarWrapper = styled(RankItemWrapper)``;
+
 export const RankItemBox = styled.div`
 	display: flex;
 	flex-direction: column;
-	justify-content: space-between;
+	row-gap: 6px;
 	padding-left: 20px;
-	height: 100%;
 `;
 
 export const DayoneRankTitleText = styled(TitleText)`
 	margin: 0 auto;
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 `;
 
 export const DayonePointText = styled(TitleText)`

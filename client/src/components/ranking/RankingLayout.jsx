@@ -1,7 +1,7 @@
 import * as M from 'style/components/main/Main.style';
 import MainTitle from 'components/title/MainTitle';
 import RankingList from 'components/ranking/RankingList';
-import VideoState from 'components/state/VideoState';
+import State from 'components/state/State';
 import RankingSkeleton from 'components/skeleton/Ranking';
 import { mainTitle } from 'const';
 import { useInfiniteQuery } from '@tanstack/react-query';
@@ -29,7 +29,7 @@ export default function RankingLayout() {
 
 	const renderRankLingList = () => {
 		if (rankingIsLoading && !rankingIsError) return <RankingSkeleton />;
-		if (rankingIsError) return <VideoState type="error" />;
+		if (rankingIsError) return <State type="error" />;
 		if (!rankingIsLoading && !rankingIsError)
 			return (
 				<RankingList
@@ -42,9 +42,10 @@ export default function RankingLayout() {
 	};
 
 	return (
-		<M.ContainerBox>
+		<M.ContainerBox both>
 			<MainTitle icon="star" title={mainTitle.rank} />
-			<M.MainInner name="ranking">{renderRankLingList()}</M.MainInner>
+			<M.MainInner>{renderRankLingList()}</M.MainInner>
+			<RankingSkeleton />
 		</M.ContainerBox>
 	);
 }

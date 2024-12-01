@@ -65,6 +65,10 @@ export const Title = styled.h2`
 			}
 		`}
 
+	@media (max-width: 1200px) {
+		font-size: 1.75rem;
+	}
+
 	${({ theme }) => theme.laptop`
         font-size: 1.75rem;
 

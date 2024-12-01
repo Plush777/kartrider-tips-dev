@@ -1,7 +1,7 @@
 'use client';
 
 import RecentYoutubeList from 'components/recentYoutube/RecentYoutubeList';
-import VideoState from 'components/state/VideoState';
+import VideoState from 'components/state/State';
 import * as M from 'style/components/main/Main.style';
 import Select from 'components/selects/Select';
 import MainTitle from 'components/title/MainTitle';
