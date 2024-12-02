@@ -251,9 +251,10 @@ export const Container = styled.div`
 	.mdRatio {
 		position: relative;
 		width: 100%;
-		padding-top: 56.25%;
+		aspect-ratio: 16 / 9;
 		border-radius: 8px;
 		background-color: var(--background2);
+		overflow: hidden;
 
 		video,
 		img,
@@ -266,7 +267,7 @@ export const Container = styled.div`
 			height: 100%;
 			border-radius: inherit;
 			display: block;
-			object-fit: cover;
+			object-fit: contain;
 		}
 
 		+ h3,
@@ -415,11 +416,12 @@ export const Container = styled.div`
 	.tag {
 		display: flex;
 		align-items: center;
-		height: 18px;
 		border-radius: 4px;
+		height: 18px;
 		font-size: 0.6875rem;
 		padding: 0 5px;
 		color: #fff;
+		line-height: normal;
 
 		&.blue {
 			background-color: var(--blue-background);
@@ -616,8 +618,13 @@ export const Container = styled.div`
 		}
 	}
 
+	.tagList {
+		flex-wrap: wrap;
+		row-gap: 10px;
+	}
+
 	${({ theme }) => theme.tablet`
-        li, p, span {
+        li, p, span:not(.tag) {
             line-height: 1.5;
         }
 

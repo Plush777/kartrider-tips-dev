@@ -2,23 +2,24 @@ import styled, { css } from 'styled-components';
 
 export const MainInner = styled.article`
 	position: relative;
-	height: 100%;
 
 	${props =>
 		props.name === 'news' &&
 		css`
+			height: 100%;
 			min-height: var(--mainHeightNews);
 		`}
 
 	${props =>
 		props.name === 'chzzk' &&
 		css`
-			height: 383px;
+			min-height: 383px;
 		`}
 
     ${props =>
 		props.name === 'recommend' &&
 		css`
+			height: 100%;
 			min-height: var(--mainHeightWide);
 		`}
 
@@ -47,7 +48,7 @@ export const MainComponentBox = styled.section`
 	}
 `;
 
-export const ContainerBox = styled.article`
+export const ContainerBox = styled.section`
 	position: relative;
 	display: flex;
 	flex-direction: column;
@@ -74,10 +75,6 @@ export const ContainerBox = styled.article`
 		& +& {
 			margin-top: calc(var(--section-gap) / 2 + 20px);
 		}
-    `};
-
-	${({ theme }) => theme.mobile`
-     
     `};
 
 	${({ theme }) => theme.small`

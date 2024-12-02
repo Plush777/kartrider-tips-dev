@@ -34,14 +34,12 @@ export default function RecentNewsLayout({ data, isLoading, isError }) {
 	};
 
 	return (
-		<M.ContainerBox>
-			<M.MainComponentBox>
-				<MainTitle icon="news" title={mainTitle.news} />
+		<M.MainComponentBox>
+			<MainTitle icon="news" title={mainTitle.news} />
 
-				<Tab indicator={true} tabIndex={tabIndex} setTabIndex={setTabIndex} data={tabArray} styleProps="main" />
+			<Tab indicator={true} tabIndex={tabIndex} setTabIndex={setTabIndex} data={tabArray} styleProps="main" />
 
-				<M.MainInner name="news">{renderRecentNewsList()}</M.MainInner>
-			</M.MainComponentBox>
-		</M.ContainerBox>
+			<M.MainInner name="news">{renderRecentNewsList()}</M.MainInner>
+		</M.MainComponentBox>
 	);
 }

@@ -38,13 +38,7 @@ export default function RecommendYoutubeList({ data, isLoading }) {
 								rel="noopener noreferrer"
 							>
 								<C.Thumbnail>
-									<Image
-										priority="high"
-										width={409}
-										height={230}
-										src={snippet.thumbnails.high.url}
-										alt={snippet.title}
-									/>
+									<Image priority width={409} height={230} src={snippet.thumbnails.high.url} alt={snippet.title} />
 								</C.Thumbnail>
 
 								<C.Head>

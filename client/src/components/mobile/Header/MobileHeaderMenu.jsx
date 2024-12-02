@@ -17,10 +17,8 @@ export default function MobileHeaderMenu({ menuToggle, handleSettingButton }) {
 			<H.mobileHeaderMenuList>
 				{menus.map(menu => {
 					return (
-						<H.mobileHeaderMenuItem className={`disabled ${myPath === menu.path ? 'active' : ''}`} key={menu.id}>
-							<H.mobileHeaderMenuLink onClick={clickAlert} href={menu.path}>
-								{menu.name}
-							</H.mobileHeaderMenuLink>
+						<H.mobileHeaderMenuItem className={`${myPath === menu.path ? 'active' : ''}`} key={menu.id}>
+							<H.mobileHeaderMenuLink href={menu.path}>{menu.name}</H.mobileHeaderMenuLink>
 						</H.mobileHeaderMenuItem>
 					);
 				})}

@@ -89,8 +89,10 @@ export const Title = styled.h2`
         }
     `};
 
-	${({ theme }) => theme.mobile`
-        flex-direction: column;
+	${({ theme }) => theme.small`
+        &::before{
+           margin-bottom: auto;
+        }
     `};
 `;
 
@@ -100,6 +102,12 @@ export const TitleBox = styled.div`
 	align-items: center;
 	justify-content: space-between;
 	margin-bottom: ${props => (props.icon === 'news' ? '40px' : '20px')};
+
+	@media screen and (max-width: 600px) {
+		flex-direction: column;
+		align-items: flex-start;
+		row-gap: 10px;
+	}
 `;
 
 export const HeadTitle = styled.h3`

@@ -2,7 +2,6 @@
 
 import * as Footerstyled from 'style/layout/Footer.style';
 import Link from 'next/link';
-import { M500 } from 'components/config/MediaQuery';
 import Image from 'next/image';
 import Select from 'components/selects/Select';
 
@@ -38,12 +37,10 @@ export default function Footer() {
 					</Footerstyled.BottomMenu>
 				</Footerstyled.BottomArea>
 
-				<M500>
-					<Footerstyled.BottomLogoArea>
-						<Image src={'/ico-footer-logo-grayscale.svg'} width={24} height={24} alt="카트라이더 팁스 로고" />
-						<Footerstyled.BottomLogoTxt>{copyYear} KARTRIDER TIPS</Footerstyled.BottomLogoTxt>
-					</Footerstyled.BottomLogoArea>
-				</M500>
+				<Footerstyled.BottomLogoArea>
+					<Image src={'/ico-footer-logo-grayscale.svg'} width={24} height={24} alt="카트라이더 팁스 로고" />
+					<Footerstyled.BottomLogoTxt>{copyYear} KARTRIDER TIPS</Footerstyled.BottomLogoTxt>
+				</Footerstyled.BottomLogoArea>
 			</Footerstyled.FooterInner>
 
 			<Footerstyled.Row>

@@ -1,6 +1,7 @@
 import Article from 'components/article/Article';
 import { getAllArticles } from 'scripts/getAllArticles';
 import useTranslateTitle from 'hooks/useTranslateTitle';
+import { meta } from 'const';
 
 export async function generateMetadata({ params }) {
 	const article = params.article;
@@ -9,7 +10,7 @@ export async function generateMetadata({ params }) {
 
 	if (article.includes('purpose') || article.includes('contribute')) {
 		return {
-			title: `${title}`,
+			title: `${meta.title} | ${title}`,
 		};
 	}
 }

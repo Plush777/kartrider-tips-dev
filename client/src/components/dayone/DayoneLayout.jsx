@@ -45,7 +45,6 @@ export default function DayoneLayout() {
 		<M.ContainerBox both>
 			<MainTitle icon="blockRanking" title={mainTitle.dayone} />
 			<M.MainInner name="ranking">{renderRankLingList()}</M.MainInner>
-			<DayoneSkeleton />
 		</M.ContainerBox>
 	);
 }

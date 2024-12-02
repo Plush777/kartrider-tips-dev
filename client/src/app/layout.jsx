@@ -7,6 +7,7 @@ import ThemeProvider from 'providers/ThemeProvider';
 import BeforeThemeRender from 'providers/BeforeThemeRender';
 import ReactQueryProvider from 'providers/ReactQueryProvider';
 import React from 'react';
+import KakaoShare from 'components/config/KakaoShare';
 
 const NexonLv1 = localFont({
 	src: [
@@ -20,9 +21,7 @@ const NexonLv1 = localFont({
 
 export const metadata = {
 	metadataBase: new URL('https://kartrider-tips.netlify.app/'),
-	title: {
-		template: `%s | ${meta.title}`,
-	},
+	title: meta.title,
 	description: meta.description,
 	author: 'Plush',
 	keywords:
@@ -71,7 +70,6 @@ export default function RootLayout({ children }) {
 				<meta name="naver-site-verification" content="3f94de41171f46560d8a1005d54f29344fc28153" />
 				<meta name="google-site-verification" content="GPYk6PpfcgAfH_xVermIhvSiltn-RMAzOC9Oap7TAWY" />
 				<meta name="theme-color" content="#f2f2f2" />
-				<link rel="preload" href="/images/tier/img-tier.webp" as="image" />
 			</head>
 
 			<body suppressHydrationWarning className={`${NexonLv1.className}`}>
@@ -87,6 +85,8 @@ export default function RootLayout({ children }) {
 						</ReactQueryProvider>
 					</StyledComponentsRegistry>
 				</Recoil>
+
+				<KakaoShare />
 			</body>
 		</html>
 	);

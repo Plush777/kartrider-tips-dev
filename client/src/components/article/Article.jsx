@@ -1,35 +1,46 @@
-import useGetArticle from "hooks/useGetArticle";
-import { format } from "date-fns";
-import { MdxContent } from "app/mdx-content";
+import useGetArticle from 'hooks/useGetArticle';
+import { format } from 'date-fns';
+import { MdxContent } from 'app/mdx-content';
 
-/* [...article] page에서 slug를 배열로 받아옵니다.*/
 export default async function Article({ slug }) {
-    // console.log(slug); 
+	const { serialized, frontmatter } = await useGetArticle(slug);
 
-    const { serialized, frontmatter } = await useGetArticle(slug);
+	const formatDate = dateString => {
+		if (!dateString) return null;
 
-    return( 
-        <>  
-            <h2>{frontmatter.title}</h2>
-            <MdxContent source={serialized} />
+		const date = new Date(dateString);
 
-            {frontmatter.date &&
-                <div className="articleDate">
-                    <span className="issuedDate">
-                        <span className="articleDateText">작성일자 :</span>
-                        <time dateTime={frontmatter.date}>{format(frontmatter.date, "yyyy년 MM월 dd일")}</time>
-                    </span>
-                </div>
-            }
+		return {
+			formatted: format(date, 'yyyy년 MM월 dd일'),
+			dateTime: date.toISOString(), // ISO 표준 형식으로 변환
+		};
+	};
 
-            {frontmatter.lastUpdated &&
-                <div className="articleDate">
-                    <span className="lastUpdated">
-                        <span className="articleDateText">마지막 업데이트 :</span>
-                        <time dateTime={frontmatter.lastUpdated}>{format(frontmatter.lastUpdated, "yyyy년 MM월 dd일")}</time>
-                    </span>
-                </div>
-            }
-        </>
-    )
+	const formattedDate = frontmatter.date ? formatDate(frontmatter.date) : null;
+	const formattedLastUpdated = frontmatter.lastUpdated ? formatDate(frontmatter.lastUpdated) : null;
+
+	return (
+		<>
+			<h2>{frontmatter.title}</h2>
+			<MdxContent source={serialized} />
+
+			{formattedDate && (
+				<div className="articleDate">
+					<span className="issuedDate">
+						<span className="articleDateText">작성일자 :</span>
+						<time dateTime={formattedDate.dateTime}>{formattedDate.formatted}</time>
+					</span>
+				</div>
+			)}
+
+			{formattedLastUpdated && (
+				<div className="articleDate">
+					<span className="lastUpdated">
+						<span className="articleDateText">마지막 업데이트 :</span>
+						<time dateTime={formattedLastUpdated.dateTime}>{formattedLastUpdated.formatted}</time>
+					</span>
+				</div>
+			)}
+		</>
+	);
 }

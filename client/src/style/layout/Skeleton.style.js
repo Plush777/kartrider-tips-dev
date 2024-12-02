@@ -66,6 +66,10 @@ export const RankItem = styled.div`
 	column-gap: 12px;
 	transition: 0.3s ease-in-out;
 	transition-property: background-color;
+
+	${({ theme }) => theme.small`
+		align-items: flex-start;
+    `};
 `;
 
 export const RankInnerBox = styled.div`
@@ -101,6 +105,7 @@ export const RankInnerRowBox = styled.div`
 	border-radius: 4px;
 	flex-wrap: wrap;
 	column-gap: 10px;
+	row-gap: 6px;
 `;
 
 export const RankDataBox = styled.div`
@@ -109,6 +114,15 @@ export const RankDataBox = styled.div`
 	background-color: var(--skeleton-background);
 	flex: 0.2;
 	border-radius: 4px;
+
+	${({ theme }) => theme.tablet`
+		flex: 1;
+    `};
+
+	${({ theme }) => theme.small`
+		flex: none;
+		min-width: 46px;
+    `};
 `;
 
 export const RankImgBox = styled.div`
@@ -140,7 +154,7 @@ export const BottombarRankNumberText = styled(RankSeqText)`
 `;
 
 export const RankTitleText = styled.div`
-	width: 30%;
+	max-width: 145px;
 	height: 22px;
 	border-radius: 4px;
 	background-color: var(--skeleton-background);
@@ -149,6 +163,7 @@ export const RankTitleText = styled.div`
 
 	${({ theme }) => theme.mobile`
 		padding-left: 15px;
+		
     `};
 `;
 
@@ -283,11 +298,6 @@ export const CardInner = styled.div`
 	display: flex;
 	flex-direction: column;
 	height: 100%;
-
-	${({ theme }) => theme.tablet`
-		height: 170px;
-		height: 475px;
-	`};
 `;
 
 export const CardHead = styled.div`
@@ -346,9 +356,9 @@ export const CardGroup = styled.div`
 	}
 
 	${({ theme }) => theme.laptop`
+		display: flex;
 		flex-direction: column;
 		row-gap: 40px;
-		grid-template-columns: 1fr;
 	`};
 `;
 

@@ -10,8 +10,7 @@ export default function ArticleLayout({ params, children }) {
 	return (
 		<A.Wrap>
 			{!params && <TopNavigation />}
-
-			<A.Inner paddingTop={!params ? '120px' : '80px'}>
+			<A.Inner paddingTop={!params ? 'hasNavi' : ''}>
 				<ArticleTop />
 				<MdxLayout>{children}</MdxLayout>
 			</A.Inner>

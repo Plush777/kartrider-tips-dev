@@ -21,9 +21,5 @@ export default function Video({ fileName }) {
 
 	if (!videoURL) return null;
 
-	return (
-		<div className="mdRatio">
-			<video src={videoURL} controls muted loop autoPlay />
-		</div>
-	);
+	return <video src={videoURL} controls muted loop autoPlay />;
 }

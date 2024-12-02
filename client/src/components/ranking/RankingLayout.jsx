@@ -45,7 +45,6 @@ export default function RankingLayout() {
 		<M.ContainerBox both>
 			<MainTitle icon="star" title={mainTitle.rank} />
 			<M.MainInner>{renderRankLingList()}</M.MainInner>
-			<RankingSkeleton />
 		</M.ContainerBox>
 	);
 }

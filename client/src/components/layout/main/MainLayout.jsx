@@ -13,10 +13,6 @@ import { fetchNews, fetchArticles } from 'scripts/api/news';
 import { videoIds } from 'data/recommend';
 import * as M from 'style/layout/MainLayout.style';
 
-import { getDoc, doc } from 'firebase/firestore';
-import { firestore } from '../../../firebase/firebasedb';
-import { useEffect } from 'react';
-
 export default function MainLayout() {
 	const queryResults = useQueries({
 		queries: [
@@ -52,20 +48,6 @@ export default function MainLayout() {
 		{ data: youtubeVideo, isLoading: youtubeVideoIsLoading, isError: youtubeVideoIsError },
 		{ data: newsData, isLoading: newsIsLoading, isError: newsIsError },
 	] = queryResults;
-
-	useEffect(() => {
-		const fetchDocument = async () => {
-			try {
-				const readDoc = await getDoc(doc(firestore, '테스트', 'MRJKng2oWHJj2gFy0MrQ'));
-				const readData = readDoc.data();
-				console.log(readData);
-			} catch (error) {
-				console.error('Error fetching document:', error);
-			}
-		};
-
-		fetchDocument();
-	}, []);
 
 	return (
 		<>
