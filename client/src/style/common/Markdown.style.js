@@ -264,6 +264,7 @@ export const Container = styled.div`
 			transform: translateX(-50%);
 			width: 100%;
 			height: 100%;
+			border-radius: inherit;
 			display: block;
 			object-fit: cover;
 		}

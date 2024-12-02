@@ -23,7 +23,7 @@ export default function Video({ fileName }) {
 
 	return (
 		<div className="mdRatio">
-			<video src={videoURL} controls width="100%" height="auto" />
+			<video src={videoURL} controls muted loop autoPlay />
 		</div>
 	);
 }
