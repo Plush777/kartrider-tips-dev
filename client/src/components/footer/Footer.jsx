@@ -12,13 +12,13 @@ export default function Footer() {
 		<Footerstyled.FooterWrap>
 			<Footerstyled.FooterInner>
 				<Footerstyled.LogoArea>
-					<Image src={'/ico-kart-logo-grayscale.svg'} width={86} height={24} alt="카트라이더 팁스 로고" />
+					<Image src={'/ico-kart-logo-grayscale.svg'} width={115} height={30} alt="Kart docs 로고" />
 				</Footerstyled.LogoArea>
-				<Footerstyled.CopyRightArea>
+				{/* <Footerstyled.CopyRightArea>
 					<Footerstyled.Copy>
 						<time>{copyYear}</time>&nbsp;KARTRIDER TIPS
 					</Footerstyled.Copy>
-				</Footerstyled.CopyRightArea>
+				</Footerstyled.CopyRightArea> */}
 
 				<Footerstyled.BottomArea>
 					<Footerstyled.BottomMenu>
@@ -39,7 +39,7 @@ export default function Footer() {
 
 				<Footerstyled.BottomLogoArea>
 					<Image src={'/ico-footer-logo-grayscale.svg'} width={24} height={24} alt="카트라이더 팁스 로고" />
-					<Footerstyled.BottomLogoTxt>{copyYear} KARTRIDER TIPS</Footerstyled.BottomLogoTxt>
+					<Footerstyled.BottomLogoTxt>{copyYear} KART DOCS</Footerstyled.BottomLogoTxt>
 				</Footerstyled.BottomLogoArea>
 			</Footerstyled.FooterInner>
 

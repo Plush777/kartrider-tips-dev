@@ -4,6 +4,7 @@ export const FooterWrap = styled.footer`
 	width: 100%;
 	background: var(--background1);
 	transition: background 0.3s ease-in-out;
+	margin-top: 20px; //sticky button;
 
 	${({ theme }) => theme.tablet`
         height: auto;
@@ -32,21 +33,8 @@ export const LogoArea = styled.div`
 	display: flex;
 	align-items: center;
 
-	&::after {
-		content: '';
-		display: inline-flex;
-		width: 1px;
-		height: 29px;
-		margin: 0 10px;
-		background-color: #ccc;
-	}
-
 	${({ theme }) => theme.mobile`
         display: none;
-
-        &::after{
-            display: none;
-        }
     `};
 `;
 
@@ -66,7 +54,13 @@ export const CopyRightArea = styled.div`
     `};
 `;
 
-export const BottomArea = styled.div``;
+export const BottomArea = styled.div`
+	margin-left: auto;
+
+	${({ theme }) => theme.mobile`
+        margin-left: 0;
+    `};
+`;
 
 export const BottomMenu = styled.ul`
 	display: flex;

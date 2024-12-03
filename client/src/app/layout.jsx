@@ -24,8 +24,7 @@ export const metadata = {
 	title: meta.title,
 	description: meta.description,
 	author: 'Plush',
-	keywords:
-		'카트라이더,kartrider drift,카트라이더 드리프트,카트라이더 팁스, KartRider Tips, 카트라이더 드리프트 가이드',
+	keywords: '카트라이더,kartrider drift,카트라이더 드리프트, Kart docs, 카트라이더 드리프트 가이드',
 	themeColor: [
 		{
 			media: '(prefers-color-scheme: dark)',

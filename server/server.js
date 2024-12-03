@@ -402,6 +402,7 @@ async function crawlRankingData({ mode, team, pointId, cursor = 1 }) {
     const url = await generateUrl(cursor, mode, team, pointId);
 
     await page.goto(url, { waitUntil: "networkidle2" });
+    blockResource(page);
 
     const data = await page.evaluate(() => {
       return Array.from(document.querySelectorAll(".board_list li")).map(

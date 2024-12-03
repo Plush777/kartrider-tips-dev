@@ -1,6 +1,6 @@
 export const meta = {
-	title: 'KartRider Tips',
-	description: '카트라이더에 대한 정보와 팁들을 제공합니다.',
+	title: 'Kart docs',
+	description: '카트라이더: 드리프트에 대한 정보와 문서들을 제공합니다.',
 	thumbnail: '/og-season3.jpg',
 };
 
@@ -20,7 +20,7 @@ export const mainTitle = {
 	calculator: '다음 티어까지 몇점 남았지?',
 	live: '치지직에서 지금 라이브중!',
 	youtube: '최신 유튜브 영상들을 만나보세요',
-	recommend: 'KARTRIDER TIPS의 추천 영상들을 만나보세요',
+	recommend: 'KART DOCS 의 추천 영상들을 만나보세요',
 	news: '최신 소식들을 확인해보세요',
 };
 
