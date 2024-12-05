@@ -29,7 +29,7 @@ export default function RankingLayout() {
 
 	const renderRankLingList = () => {
 		if (rankingIsLoading && !rankingIsError) return <RankingSkeleton />;
-		if (rankingIsError) return <State type="error" />;
+		if (rankingIsError) return <State componentRole="ranking" type="error" />;
 		if (!rankingIsLoading && !rankingIsError)
 			return (
 				<RankingList

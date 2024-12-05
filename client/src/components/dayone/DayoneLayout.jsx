@@ -6,6 +6,7 @@ import DayoneList from 'components/dayone/DayoneList';
 import { mainTitle } from 'const';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { fetchDayoneData } from 'scripts/api/ranking';
+import ToggleSelector from 'components/selects/ToggleSelector';
 
 export default function DayoneLayout() {
 	const {
@@ -41,9 +42,20 @@ export default function DayoneLayout() {
 			);
 	};
 
+	const handleClick = index => {
+		if (index === 0) {
+			console.log(0);
+		} else if (index === 1) {
+			console.log(1);
+		}
+	};
+
+	const dayoneList = ['스피드전', '아이템전'];
+
 	return (
 		<M.ContainerBox both>
 			<MainTitle icon="blockRanking" title={mainTitle.dayone} />
+			<ToggleSelector data={dayoneList} clickFn={handleClick} />
 			<M.MainInner name="ranking">{renderRankLingList()}</M.MainInner>
 		</M.ContainerBox>
 	);
