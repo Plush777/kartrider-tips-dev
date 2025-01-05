@@ -1,6 +1,5 @@
 'use client';
 
-import DayoneLayout from 'components/dayone/DayoneLayout';
 import ChzzkLiveLayout from 'components/chzzk/ChzzkLiveLayout';
 import RecentYoutubeLayout from 'components/recentYoutube/RecentYoutubeLayout';
 import RecommendLayout from 'components/recommend/RecommendLayout';
@@ -53,7 +52,6 @@ export default function MainLayout() {
 		<>
 			<M.Container>
 				<RankingLayout />
-				<DayoneLayout />
 			</M.Container>
 
 			<ChzzkLiveLayout />

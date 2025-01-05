@@ -278,6 +278,10 @@ export const Container = styled.div`
 		+ .sprite {
 			margin-top: 60px;
 		}
+
+		+ p {
+			margin-top: 20px;
+		}
 	}
 
 	.mdTip {
@@ -600,6 +604,11 @@ export const Container = styled.div`
 		border-radius: 12px;
 	}
 
+	.dynamicImage {
+		object-position: -40px 0;
+		width: 300px;
+	}
+
 	.grid2 {
 		display: grid;
 		grid-template-columns: repeat(2, 200px);
@@ -670,7 +679,18 @@ export const Sprite = styled.i`
 		background-color: #121212;
 	}
 
+	&.kart {
+		width: 300px;
+		height: 260px;
+		background-image: url('/images/karts/img-karts.webp');
+	}
+
+	+ p,
 	+ .infoWrap {
 		margin-top: 20px;
+	}
+
+	+ h3 {
+		margin-top: 50px;
 	}
 `;

@@ -16,7 +16,6 @@ export const publicImageSrc = {
 
 export const mainTitle = {
 	rank: '현재 우리 게임 순위는?',
-	dayone: '데이원 리그 순위를 확인해보세요',
 	calculator: '다음 티어까지 몇점 남았지?',
 	live: '치지직에서 지금 라이브중!',
 	youtube: '최신 유튜브 영상들을 만나보세요',

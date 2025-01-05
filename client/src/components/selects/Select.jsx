@@ -32,9 +32,13 @@ export default function Select({ width, height, selectKey, setSelectKey, data })
 	const handleSelectPosTop = () => {
 		if (data === 'sites') {
 			return '-153px';
-		} else if (data === 'channels') {
+		}
+
+		if (data === 'channels') {
 			return '40px';
 		}
+
+		return null;
 	};
 
 	const renderSelectList = () => {
@@ -49,15 +53,18 @@ export default function Select({ width, height, selectKey, setSelectKey, data })
 					</Selectstyled.OptionItem>
 				);
 			});
-		} else if (data === 'channels') {
+		}
+
+		if (data === 'channels') {
 			return channels.map((channelItem, index) => {
+				console.log(channelItem);
 				return (
 					<Selectstyled.OptionItem key={index}>
 						<Selectstyled.OptionText
 							as="button"
 							type="button"
-							onClick={e => {
-								handleSelectClick('channel', e);
+							onClick={() => {
+								handleSelectClick();
 								handleSelectKey(index);
 							}}
 						>
@@ -67,6 +74,8 @@ export default function Select({ width, height, selectKey, setSelectKey, data })
 				);
 			});
 		}
+
+		return null;
 	};
 
 	useEffect(() => {
@@ -79,9 +88,12 @@ export default function Select({ width, height, selectKey, setSelectKey, data })
 	const renderSelectText = () => {
 		if (data === 'sites') {
 			return '관련 사이트';
-		} else if (data === 'channels') {
+		}
+
+		if (data === 'channels') {
 			return channels[randomChannelIndex];
 		}
+		return null;
 	};
 
 	return (

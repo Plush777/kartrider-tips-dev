@@ -35,10 +35,6 @@ export const RankInnerBoxContainer = styled.div`
 	height: 90px;
 `;
 
-export const DayoneInnerBoxContainer = styled(RankInnerBoxContainer)`
-	padding: 20px 0;
-`;
-
 export const BottombarInnerBoxContainer = styled(RankInnerBoxContainer)`
 	padding: 13.5px 20px;
 	height: auto;
@@ -53,10 +49,6 @@ export const Seq = styled.div`
 	align-items: center;
 `;
 
-export const DayoneSeq = styled(Seq)`
-	min-width: 110px;
-`;
-
 export const BottombarSeq = styled(Seq)``;
 
 export const SeqText = styled.strong`
@@ -67,8 +59,6 @@ export const SeqText = styled.strong`
 		color: var(--active);
 	}
 `;
-
-export const DayoneSeqText = styled(SeqText)``;
 
 export const BottombarSeqText = styled(SeqText)``;
 
@@ -114,13 +104,6 @@ export const RankItemDataInnerBox = styled.div`
 	column-gap: 5px;
 `;
 
-export const DayoneInnerBox = styled.div`
-	display: flex;
-	align-items: center;
-	flex: 1;
-	padding-left: 10px;
-`;
-
 export const BottombarInnerBox = styled(RankItemDataInnerBox)``;
 
 export const RankStatus = styled.div`
@@ -132,13 +115,17 @@ export const RankStatus = styled.div`
 
 export const RankItem = styled.div`
 	flex: 1;
+
+	&.active {
+		${RankInnerBoxContainer} {
+			background-color: var(--background1);
+		}
+	}
 `;
 
 export const RankItemWrapper = styled.div`
 	height: 100%;
 `;
-
-export const DayoneItemWrapper = styled(RankItemWrapper)``;
 
 export const BottombarWrapper = styled(RankItemWrapper)``;
 
@@ -147,25 +134,6 @@ export const RankItemBox = styled.div`
 	flex-direction: column;
 	row-gap: 6px;
 	padding-left: 20px;
-`;
-
-export const DayoneRankTitleText = styled(TitleText)`
-	margin: 0 auto;
-	display: -webkit-box;
-	-webkit-line-clamp: 1;
-	-webkit-box-orient: vertical;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-`;
-
-export const DayonePointText = styled(TitleText)`
-	min-width: 130px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	font-size: 1.125rem;
-	color: var(--text1);
 `;
 
 export const BottomBar = styled.div`
@@ -223,5 +191,31 @@ export const RankTopBarText = styled.span`
 	&[data-index='3'] {
 		padding-right: 33px;
 		min-width: 130px;
+	}
+`;
+
+export const RankDescription = styled.div`
+	display: flex;
+	flex-direction: column;
+	row-gap: 3px;
+	margin-bottom: 10px;
+`;
+
+export const RankDescriptionText = styled.p`
+	position: relative;
+	font-size: 0.875rem;
+	font-weight: 500;
+	color: var(--description);
+	padding-left: 15px;
+
+	&::before {
+		content: '';
+		position: absolute;
+		top: 6px;
+		left: 0;
+		width: 5px;
+		height: 5px;
+		border-radius: 50%;
+		background-color: var(--description);
 	}
 `;

@@ -31,6 +31,12 @@ export const MainInner = styled.article`
 			flex-direction: column;
 		`}
 
+		${props =>
+		props.name === 'ranking' &&
+		css`
+			margin-top: 10px;
+		`}
+
     ${({ theme }) => theme.tablet`
         min-height: auto;
 
@@ -54,10 +60,13 @@ export const ContainerBox = styled.section`
 	flex-direction: column;
 
 	${props =>
-		props.both &&
-		css`
-			flex: 0.5;
-		`}
+		props.both
+			? css`
+					flex: 0.5;
+				`
+			: css`
+					flex: 1;
+				`}
 
 	${({ theme }) => theme.laptop`
 		flex-direction: column;

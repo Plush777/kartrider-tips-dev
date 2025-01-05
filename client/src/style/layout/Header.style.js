@@ -43,6 +43,8 @@ export const HeaderInner = styled.div`
 
 export const Logo = styled.h1`
 	img {
+		object-position: 0 -3px;
+
 		${({ theme }) => theme.laptop`
             width: 100px;
         `};

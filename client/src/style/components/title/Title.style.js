@@ -114,11 +114,10 @@ export const HeadTitle = styled.h3`
 	font-size: 1.5rem;
 	color: var(--title);
 	display: -webkit-box;
-	-webkit-line-clamp: 3;
+	-webkit-line-clamp: 2;
 	-webkit-box-orient: vertical;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	max-height: 87px;
 
 	${({ theme }) => theme.laptop`
         font-size: 1.375rem;

@@ -42,7 +42,7 @@ export default function RankingLayout() {
 	};
 
 	return (
-		<M.ContainerBox both>
+		<M.ContainerBox>
 			<MainTitle icon="star" title={mainTitle.rank} />
 			<M.MainInner>{renderRankLingList()}</M.MainInner>
 		</M.ContainerBox>

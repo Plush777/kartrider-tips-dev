@@ -13,11 +13,25 @@ export default function RankingList({ ranking, rankingFetchNextPage, rankingHasN
 		},
 	};
 
+	const rankingDescriptions = [
+		{
+			text: '순위 데이터는 더로그 (https://www.thelog.co.kr/) 에서 가져오고 있습니다.',
+		},
+		{
+			text: '15분 간격으로 데이터가 자동 새로고침 됩니다.',
+		},
+	];
+
 	console.log(ranking);
 
 	return (
 		<R.RankWrap>
 			<R.RankInner>
+				<R.RankDescription>
+					{rankingDescriptions.map((item, index) => (
+						<R.RankDescriptionText key={index}>{item.text}</R.RankDescriptionText>
+					))}
+				</R.RankDescription>
 				<R.RankList scrollHeight="calc(100vh - 410px)">
 					{ranking &&
 						ranking.pages.map(page => {

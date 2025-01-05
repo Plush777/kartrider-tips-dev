@@ -2,7 +2,7 @@ import { useState } from 'react';
 import useClickOutside from 'hooks/useClickOutside';
 import * as T from 'style/common/ToggleSelector.style';
 
-export default function ToggleSelector({ data, clickFn }) {
+export default function ToggleSelector({ data, clickFn, name }) {
 	const [active, setActive] = useState(0);
 	const [toggle, setToggle] = useState(false);
 
@@ -13,7 +13,7 @@ export default function ToggleSelector({ data, clickFn }) {
 	const ref = useClickOutside(handleClose);
 
 	return (
-		<T.SelectWrap ref={ref}>
+		<T.SelectWrap name={name} ref={ref}>
 			<T.SelectButton onClick={handleToggle}>설정</T.SelectButton>
 			<T.SelectList className={toggle && 'active'}>
 				{data?.map((item, index) => {

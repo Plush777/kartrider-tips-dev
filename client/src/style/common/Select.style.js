@@ -1,8 +1,21 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+
+export const SelectGroup = styled.div`
+	display: flex;
+	align-items: center;
+	column-gap: 10px;
+`;
 
 export const SelectArea = styled.div`
 	position: relative;
 	width: ${props => props.width};
+
+	${props =>
+		!props.width &&
+		css`
+			display: flex;
+			flex: 1;
+		`}
 
 	@media screen and (max-width: 600px) {
 		width: 100%;
@@ -14,8 +27,9 @@ export const Select = styled.button.attrs({ type: 'button' })`
 	align-items: center;
 	justify-content: space-between;
 	width: ${props => props.width};
-	height: ${props => props.height};
+	height: ${props => props.height || '36px'};
 	padding: 0 12px;
+	flex: 1;
 	border: 1px solid var(--stroke1);
 	border-radius: 4px;
 	background-color: var(--background2);

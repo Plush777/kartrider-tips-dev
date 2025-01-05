@@ -379,58 +379,6 @@ const getGameStatsData = async (cursor = 1) => {
   return { result, nextCursor };
 };
 
-async function generateUrl(page, mode, team, date) {
-  const baseUrl = "https://kartdrift.nexon.com/kartdrift/ko/ranking/dayone";
-  const pointId = `dol.${date}.${mode.toLowerCase()}${team.toLowerCase()}`;
-  return `${baseUrl}?page=${page}&mode=${mode}&team=${team}&pointId=${pointId}`;
-}
-
-async function crawlRankingData({ mode, team, date, cursor = 1 }) {
-  const browser = await puppeteer.launch({
-    headless: true,
-    args: [
-      "--no-sandbox",
-      "--disable-setuid-sandbox",
-      "--disable-dev-shm-usage",
-      "--disable-accelerated-2d-canvas",
-      "--disable-gpu",
-      "--window-size=1920x1080",
-    ],
-  });
-
-  try {
-    const page = await browser.newPage();
-    const url = await generateUrl(cursor, mode, team, date);
-    console.log(url);
-
-    await page.goto(url, { waitUntil: "networkidle2" });
-    blockResource(page);
-
-    const data = await page.evaluate(() => {
-      return Array.from(document.querySelectorAll(".board_list li")).map(
-        (item) => ({
-          rank:
-            item.querySelector("[class*='do_n']")?.textContent.trim() ||
-            undefined,
-          name: item.querySelector(".do_tit")?.textContent.trim() || undefined,
-          score: item.querySelector(".do_p")?.textContent.trim() || undefined,
-        })
-      );
-    });
-
-    return {
-      result: data,
-      nextCursor: data.length === 10 ? Number(cursor) + 1 : null,
-      totalPages: 10,
-    };
-  } catch (error) {
-    console.error("랭킹 데이터 크롤링 중 오류:", error);
-    throw error;
-  } finally {
-    await browser.close();
-  }
-}
-
 app.get("/api/article/:resource", (req, res) => {
   let { resource } = req.params;
 
@@ -508,16 +456,11 @@ app.get("/api/games/:source", async (req, res) => {
   try {
     switch (source) {
       case "ranking":
-        console.log("Fetching mygame data...");
-
-        const { result, nextCursor } = await getGameStatsData(sourceCursor);
-
-        req.app.locals.cachedGameData = { result, nextCursor };
+        const { result, nextCursor } = await getGameStatsData(
+          Number(sourceCursor)
+        );
         res.json({ result, nextCursor });
-
         break;
-
-      /* === */
 
       case "news":
         const searchParams = apiObject.naver.search.params.search(
@@ -533,28 +476,6 @@ app.get("/api/games/:source", async (req, res) => {
         break;
 
       /* === */
-
-      case "dayone":
-        const { mode = "Item", team = "Solo", date = "241124" } = req.query;
-
-        try {
-          const { result, nextCursor } = await crawlRankingData({
-            mode,
-            team,
-            date,
-            cursor: Number(sourceCursor),
-          });
-
-          req.app.locals.cachedDayoneData = { result, nextCursor };
-          res.json({ result, nextCursor });
-        } catch (error) {
-          console.error(error);
-          res
-            .status(500)
-            .json({ error: "요청 처리 도중 오류가 발생했습니다." });
-        }
-
-        break;
     }
   } catch (error) {
     console.error(error);
