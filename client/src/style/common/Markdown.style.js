@@ -607,6 +607,10 @@ export const Container = styled.div`
 	.dynamicImage {
 		object-position: -40px 0;
 		width: 300px;
+
+		&.ob-p0 {
+			object-position: 0 0;
+		}
 	}
 
 	.grid2 {
