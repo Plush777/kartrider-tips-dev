@@ -34,6 +34,9 @@ export default function Footer() {
 								피드백
 							</a>
 						</Footerstyled.BottomItem>
+						<Footerstyled.BottomItem as="li">
+							<Link href="/guide/donate">후원하기</Link>
+						</Footerstyled.BottomItem>
 					</Footerstyled.BottomMenu>
 				</Footerstyled.BottomArea>
 

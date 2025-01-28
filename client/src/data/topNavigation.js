@@ -1,7 +1,9 @@
 import { docsSlug } from 'const';
 
 export const changeLinkName = item => {
-	// console.log(item);
+	console.log(item);
+
+	if (item === 'intro') return '소개';
 
 	/* footer */
 	if (item === 'purpose') return '사이트 안내';

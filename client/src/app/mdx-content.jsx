@@ -15,6 +15,7 @@ import TagList from 'components/mdx/TagList';
 import Figure from 'components/mdx/Figure';
 import GridWrapper from 'components/encyclopedia/GridWrapper';
 import Video from 'components/mdx/Video';
+import Del from 'components/mdx/Del';
 
 const MdxComponents = {
 	Link: props => <MdxLink {...props} />,
@@ -31,6 +32,7 @@ const MdxComponents = {
 	Figure: props => <Figure {...props} />,
 	GridWrapper: props => <GridWrapper {...props} />,
 	Video: props => <Video {...props} />,
+	Del: props => <Del {...props} />,
 };
 
 export function MdxContent({ source }) {

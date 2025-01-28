@@ -454,6 +454,10 @@ export const learnData = [
 		sectionTitle: '튜닝',
 		depth1: [
 			{
+				title: '소개',
+				href: '/docs/learn/tuning/intro',
+			},
+			{
 				title: '아이템전',
 				href: '/docs/learn/tuning/item',
 			},

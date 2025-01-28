@@ -636,6 +636,12 @@ export const Container = styled.div`
 		row-gap: 10px;
 	}
 
+	.mdDel {
+		+ p {
+			margin-top: 20px;
+		}
+	}
+
 	${({ theme }) => theme.tablet`
         li, p, span:not(.tag) {
             line-height: 1.5;
