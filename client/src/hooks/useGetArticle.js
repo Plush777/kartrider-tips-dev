@@ -25,10 +25,11 @@ function markdownDirCondition(slugArray) {
 
 	if (slugArray.includes('purpose') && slugArray.length < 2) return 'purpose';
 	if (slugArray.includes('contribute') && slugArray.length < 2) return 'contribute';
+	if (slugArray.includes('donate') && slugArray.length < 2) return 'donate';
 }
 
 function categoryCondition(slugArray) {
-	if (slugArray.includes('purpose') || slugArray.includes('contribute')) return 'guide';
+	if (slugArray.includes('purpose') || slugArray.includes('contribute') || slugArray.includes('donate')) return 'guide';
 	if (slugArray.includes('learn') || slugArray.includes('encyclopedia') || slugArray.includes('faq')) return 'docs';
 }
 

@@ -6,7 +6,7 @@ export const sites = [
 		link: 'https://now.nexon.com/service/kd-live?page=8c36d678-41cb-4303-b63e-17d66b781071',
 	},
 	{
-		name: '카트 쿠폰 사용',
+		name: '쿠폰 사용',
 		link: 'https://mcoupon.nexon.com/kartdrift',
 	},
 	{
@@ -16,10 +16,6 @@ export const sites = [
 	{
 		name: '카트라이더 e-sports',
 		link: 'https://kartrideresports.nexon.com/Main/Index',
-	},
-	{
-		name: '레이싱 패스 가이드',
-		link: 'https://kartdrift.nexon.com/kartdrift/ko/guide/gameguide/view?threadId=2512984',
 	},
 	{
 		name: '아트웍',

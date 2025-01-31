@@ -171,7 +171,8 @@ export const Container = styled.div`
 	}
 
 	ul {
-		+ .figureWrap {
+		+ .figureWrap,
+		+ .mdRatio {
 			margin-top: 20px;
 		}
 
@@ -276,7 +277,7 @@ export const Container = styled.div`
 		}
 
 		+ .sprite {
-			margin-top: 60px;
+			margin-top: 30px;
 		}
 
 		+ p {

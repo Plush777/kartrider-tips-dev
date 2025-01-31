@@ -12,41 +12,46 @@ export default function ChzzkLiveList({ data, loading }) {
 
 	return (
 		<C.Group display="grid" gtc="repeat(3, 1fr)" rg="60px">
+			{/* adult : true => (19세 성인 라이브는 제외) */}
 			{data &&
 				data.pages.map(pageItem => {
-					return pageItem.map((element, elementIndex) => {
-						const { channelId, channelName } = element.channel;
-						let { liveTitle, liveImageUrl, openDate } = element.live;
-						const liveLink = `${baseLink}${channelId}`;
+					return pageItem
+						.filter(item => !item.live.adult)
+						.map((element, elementIndex) => {
+							const { channelId, channelName } = element.channel;
+							let { liveTitle, liveImageUrl, openDate } = element.live;
+							const liveLink = `${baseLink}${channelId}`;
 
-						liveImageUrl = liveImageUrl?.replace('{type}', '1080');
+							liveImageUrl = liveImageUrl?.replace('{type}', '1080');
 
-						return (
-							<C.Item key={elementIndex}>
-								<C.Link className={isShow} href={liveLink} target="_blank" rel="noopener noreferrer">
-									<C.ThumbnailWrapper>
-										<VideoInfo />
-										<C.Thumbnail>
-											{liveImageUrl ? (
-												<Image priority="high" src={liveImageUrl} alt={liveTitle} width={409} height={230} />
-											) : (
-												<Adult />
-											)}
-										</C.Thumbnail>
-									</C.ThumbnailWrapper>
+							console.log(element);
 
-									<C.Head>
-										<Tit.HeadTitle>{decode(liveTitle)}</Tit.HeadTitle>
-									</C.Head>
+							return (
+								<C.Item key={elementIndex}>
+									<C.Link className={isShow} href={liveLink} target="_blank" rel="noopener noreferrer">
+										<C.ThumbnailWrapper>
+											<VideoInfo />
+											<C.Thumbnail>
+												{liveImageUrl ? (
+													<Image priority="high" src={liveImageUrl} alt={liveTitle} width={409} height={230} />
+												) : (
+													<Adult />
+												)}
+											</C.Thumbnail>
+										</C.ThumbnailWrapper>
 
-									<C.Bottom>
-										<C.BottomDescription>By&nbsp;{channelName}</C.BottomDescription>
-										<C.BottomDescription as="time">{openDate}</C.BottomDescription>
-									</C.Bottom>
-								</C.Link>
-							</C.Item>
-						);
-					});
+										<C.Head>
+											<Tit.HeadTitle>{decode(liveTitle)}</Tit.HeadTitle>
+										</C.Head>
+
+										<C.Bottom>
+											<C.BottomDescription>By&nbsp;{channelName}</C.BottomDescription>
+											<C.BottomDescription as="time">{openDate}</C.BottomDescription>
+										</C.Bottom>
+									</C.Link>
+								</C.Item>
+							);
+						});
 				})}
 		</C.Group>
 	);
