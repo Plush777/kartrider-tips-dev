@@ -4,13 +4,13 @@ import { useQuery } from '@tanstack/react-query';
 import { fetchKarts } from 'scripts/api/karts';
 import Tab from 'components/tabs/Tab';
 import { tabArray } from 'data/karts';
-import { characterData } from 'data/characters';
 import useTab from 'hooks/useTab';
 import Container from 'components/sub/grid/Container';
 import useSearch from 'hooks/useSearch';
 import SearchItem from 'components/search/SearchItem';
 import useSearchDataObject from 'hooks/useSearchDataObject';
 import useSearchRenderResults from 'hooks/useSearchRenderResults';
+import { useGetExcelQuries } from 'hooks/useGetExcelQuries';
 import GridSkeleton from 'components/skeleton/Grid';
 import { useEffect, useState } from 'react';
 import NoMatch from 'components/search/NoMatch';
@@ -26,10 +26,14 @@ export default function GridWrapper({ type }) {
 		retry: 1,
 	});
 
+	const { kart_a2, kart_n1, character } = useGetExcelQuries();
+
+	// console.log(file1);
+
 	const typeCondition = value => {
 		if (value === 'data') {
 			if (type === 'karts') return data;
-			if (type === 'characters') return characterData;
+			if (type === 'characters') return character;
 
 			return null;
 		}

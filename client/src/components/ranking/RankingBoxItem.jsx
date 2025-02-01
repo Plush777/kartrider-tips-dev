@@ -68,7 +68,7 @@ export default function RankingBoxItem({
 	};
 
 	return (
-		<R.RankItem className={!roleProps && title === '카트라이더 드리프트' ? 'active' : ''} as={tagAs}>
+		<R.RankItem className={!roleProps && title === '카트라이더: 드리프트' ? 'active' : ''} as={tagAs}>
 			{renderItem()}
 		</R.RankItem>
 	);

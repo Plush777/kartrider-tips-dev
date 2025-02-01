@@ -71,6 +71,8 @@ export default function DetailsItem({ dataProps, commonProps, depth1, depth1Key,
 			);
 		}
 
+		console.log(dataProps.loopData);
+
 		/* 도감 페이지 검색  */
 		if (commonProps.dataType === 'list') {
 			return <Grid data={dataProps.loopData} commonProps={commonProps} />;

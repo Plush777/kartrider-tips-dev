@@ -7,7 +7,7 @@ import NoImage from 'components/sub/grid/NoImage';
 import useImageLoad from 'hooks/useImageLoad';
 import { publicImageSrc } from 'const';
 
-export default function GridItem({ kartItem, toggle, uniqueIndex, toggleArray, setToggleArray, collapseRef }) {
+export default function GridItem({ item, toggle, uniqueIndex, toggleArray, setToggleArray, collapseRef }) {
 	const { loaded, imageError, handleImageError, loadingComplete } = useImageLoad();
 
 	const handleToggle = index => {
@@ -27,17 +27,17 @@ export default function GridItem({ kartItem, toggle, uniqueIndex, toggleArray, s
 
 	return (
 		<G.InnerItem className={`${loaded || imageError ? 'loaded' : ''}`}>
-			{kartItem.img && !imageError ? (
+			{item.img && !imageError ? (
 				<G.ImgDiv>
-					{kartItem.type && <G.Tag className={`gridTag ${backgroundCondition(kartItem.type)}`}>{kartItem.type}</G.Tag>}
+					{item.type && <G.Tag className={`gridTag ${backgroundCondition(item.type)}`}>{item.type}</G.Tag>}
 					<Image
 						className="gridImage"
 						onLoadingComplete={loadingComplete}
 						onError={handleImageError}
-						src={kartItem.stat ? kartItem.img : `${kartItem.img}.webp`}
+						src={item.stat ? item.img : `${item.img}.webp`}
 						width={240}
 						height={200}
-						alt={kartItem.name}
+						alt={item.name}
 					/>
 				</G.ImgDiv>
 			) : (
@@ -47,7 +47,7 @@ export default function GridItem({ kartItem, toggle, uniqueIndex, toggleArray, s
 			<G.Box>
 				<G.InnerBox>
 					<G.Button className="gridButton" type="button" onClick={() => handleToggle(uniqueIndex)}>
-						<G.Text>{kartItem.name}</G.Text>
+						<G.Text>{item.아이템명}</G.Text>
 
 						{toggle ? (
 							<SCMinus width="16px" height="16px" stroke="var(--title)" />

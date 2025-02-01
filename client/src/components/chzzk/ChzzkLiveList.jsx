@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import useImageTransition from 'hooks/useImageTransition';
 import VideoInfo from 'components/video/VideoInfo';
-import Adult from 'components/chzzk/Adult';
 import { decode } from 'html-entities';
 import * as Tit from 'style/components/title/Title.style';
 import * as C from 'style/components/main/Card.style';
@@ -32,10 +31,8 @@ export default function ChzzkLiveList({ data, loading }) {
 										<C.ThumbnailWrapper>
 											<VideoInfo />
 											<C.Thumbnail>
-												{liveImageUrl ? (
+												{liveImageUrl && (
 													<Image priority="high" src={liveImageUrl} alt={liveTitle} width={409} height={230} />
-												) : (
-													<Adult />
 												)}
 											</C.Thumbnail>
 										</C.ThumbnailWrapper>

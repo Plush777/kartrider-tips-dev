@@ -21,6 +21,10 @@ export const Container = styled.div`
 			display: inline;
 		}
 
+		+ .mdLinkWrap {
+			margin-top: 30px;
+		}
+
 		+ .mdLink,
 		+ .mdRatio,
 		+ ul,
@@ -638,6 +642,28 @@ export const Container = styled.div`
 	}
 
 	.mdDel {
+		+ p {
+			margin-top: 20px;
+		}
+	}
+
+	.mdLinkWrap {
+		&.donate {
+			display: flex;
+			align-items: center;
+			flex-wrap: wrap;
+			gap: 16px;
+
+			img {
+				width: 60px;
+				height: 60px;
+
+				&:not([alt='qr']) {
+					border-radius: 8px;
+				}
+			}
+		}
+
 		+ p {
 			margin-top: 20px;
 		}

@@ -9,8 +9,9 @@ export default function MainLayout({ children }) {
     cookies: {name: cookie이름 , value: cookie 값} 형식으로 저장됨.
   */
 	const serverStates = {
-		theme: cookieStore.get('theme'),
-		fontSize: cookieStore.get('fontSize'),
+		// 올바른 fallback 값 설정
+		theme: cookieStore.get('theme')?.value || 'light',
+		fontSize: cookieStore.get('fontSize')?.value || 'default',
 	};
 
 	console.log(serverStates.theme);

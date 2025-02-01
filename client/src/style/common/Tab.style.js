@@ -24,7 +24,13 @@ export const TabItem = styled.li`
 `;
 
 export const TabDiv = styled.div`
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 100%;
 	color: var(--disabled);
+	padding-bottom: 15px;
 
 	&.active {
 		font-weight: 600;
@@ -35,7 +41,6 @@ export const TabDiv = styled.div`
 export const TabWrap = styled.div`
 	position: relative;
 	margin-bottom: ${props => props.marginBottom};
-	padding-bottom: 15px;
 	border-bottom: 2px solid var(--stroke2);
 	overflow-x: auto;
 
