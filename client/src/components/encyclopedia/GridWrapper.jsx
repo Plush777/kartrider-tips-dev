@@ -28,11 +28,11 @@ export default function GridWrapper({ type }) {
 
 	const { kart_a2, kart_n1, character } = useGetExcelQuries();
 
-	// console.log(file1);
+	console.log(kart_n1);
 
 	const typeCondition = value => {
 		if (value === 'data') {
-			if (type === 'karts') return data;
+			if (type === 'karts') return kart_n1;
 			if (type === 'characters') return character;
 
 			return null;

@@ -4,16 +4,19 @@ import { fetchExcelData } from 'utils/excelReader';
 export function useGetExcelQuries() {
 	const file1Query = useQuery({
 		queryKey: ['excel', 'file1'],
+		staleTime: Infinity,
 		queryFn: () => fetchExcelData('/data/xlsx/kartdocs_카트바디도감_a2.xlsx'),
 	});
 
 	const file2Query = useQuery({
 		queryKey: ['excel', 'file2'],
+		staleTime: Infinity,
 		queryFn: () => fetchExcelData('/data/xlsx/kartdocs_카트바디도감_n1.xlsx'),
 	});
 
 	const file3Query = useQuery({
 		queryKey: ['excel', 'file3'],
+		staleTime: Infinity,
 		queryFn: () => fetchExcelData('/data/xlsx/kartdocs_캐릭터도감.xlsx'),
 	});
 

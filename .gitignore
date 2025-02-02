@@ -2,5 +2,6 @@
 /client/.env
 /client/node_modules
 /client/.git
+/client/public/data/xlsx/.*xlsx
 
 /server/.env

@@ -624,9 +624,9 @@ export const Container = styled.div`
 		gap: 10px;
 	}
 
-	[class*='grid'] {
+	/* [class*='grid'] {
 		margin-top: 20px;
-	}
+	} */
 
 	.hasIdDiv {
 		margin-top: 70px;
