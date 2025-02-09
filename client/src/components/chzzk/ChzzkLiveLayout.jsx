@@ -99,15 +99,11 @@ export default function ChzzkLiveLayout() {
 
 	return (
 		<M.MainComponentBox>
-			<MainTitle
-				title={mainTitle.live}
-				icon="chzzk"
-				right={
-					<Cz.RightGroup>
-						{chzzkFetched && <Cz.LastUpdate>{`마지막 업데이트: ${formattedUpdatedAt}`}</Cz.LastUpdate>}
-					</Cz.RightGroup>
-				}
-			/>
+			<MainTitle title={mainTitle.live} icon="chzzk">
+				<Cz.RightGroup>
+					{chzzkFetched && <Cz.LastUpdate>{`마지막 업데이트: ${formattedUpdatedAt}`}</Cz.LastUpdate>}
+				</Cz.RightGroup>
+			</MainTitle>
 
 			<M.MainInner name="chzzk">
 				{chzzkError && <State type="error" componentRole="live" />}

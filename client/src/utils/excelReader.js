@@ -24,7 +24,7 @@ export async function fetchExcelData(filePath) {
 			return newItem;
 		});
 
-		console.log(transformedData);
+		// console.log(transformedData);
 
 		return transformedData;
 	} catch (error) {

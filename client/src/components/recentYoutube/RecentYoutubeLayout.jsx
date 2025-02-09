@@ -32,11 +32,9 @@ export default function RecentYoutubeLayout() {
 
 	return (
 		<M.MainComponentBox>
-			<MainTitle
-				icon="youtube"
-				title={mainTitle.youtube}
-				right={<Select data="channels" selectKey={selectKey} setSelectKey={setSelectKey} width="190px" height="36px" />}
-			/>
+			<MainTitle icon="youtube" title={mainTitle.youtube}>
+				<Select data="channels" selectKey={selectKey} setSelectKey={setSelectKey} width="190px" height="36px" />
+			</MainTitle>
 
 			<M.MainInner name="recent">{renderRecentList()}</M.MainInner>
 		</M.MainComponentBox>

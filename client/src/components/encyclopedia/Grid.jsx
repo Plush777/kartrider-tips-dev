@@ -2,34 +2,21 @@ import * as G from 'style/components/sub/encyclopedia/Grid.style';
 import { useState, useEffect, useRef } from 'react';
 import GridItem from 'components/encyclopedia/GridItem';
 import GridCollapse from 'components/encyclopedia/GridCollapse';
-import { filterDataByGrade } from 'data/sidebar';
 
 export default function Grid({ data, commonProps }) {
-	const [dataState, setDataState] = useState(undefined);
 	const [toggleArray, setToggleArray] = useState([]);
 	const collapseRef = useRef([]);
 
-	// let karts = filterDataByGrade(commonProps.kartGradeData, data);
+	// 현재 등급에 맞는 데이터 필터링
+	const filteredData = data?.filter(item => item.등급 === commonProps.kartGradeData);
 
-	// console.log(karts);
-
+	// 토글 배열 초기화
 	useEffect(() => {
-		if (data) {
-			// setDataState(karts);
-			const initArray = Array.from({ length: data.length }, () => false);
-			setToggleArray(initArray);
+		if (filteredData) {
+			const newToggleArray = Array.from({ length: filteredData.length }, () => false);
+			setToggleArray(newToggleArray);
 		}
-
-		// if (data && commonProps.value.length > 0) {
-		// 	setDataState(data);
-		// }
-
-		if (data && commonProps.value.length > 0 && commonProps.clicked?.includes(true)) {
-			commonProps.setValue('');
-			commonProps.setClicked([false, false, false, false, false]);
-			setDataState(karts);
-		}
-	}, [data, commonProps.tabIndex, commonProps.kartGradeData, commonProps.value]);
+	}, [filteredData?.length]);
 
 	const handleToggle = index => {
 		const updatedArray = toggleArray.map((_, i) => {
@@ -56,10 +43,15 @@ export default function Grid({ data, commonProps }) {
 		}
 	};
 
+	const displayData =
+		commonProps.value.length > 0
+			? filteredData?.filter(item => item.아이템명.toLowerCase().includes(commonProps.value.toLowerCase()))
+			: filteredData;
+
 	return (
 		<G.Wrap>
 			<G.List>
-				{data?.map((item, index) => {
+				{displayData?.map((item, index) => {
 					const toggle = toggleArray[index];
 
 					return (

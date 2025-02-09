@@ -2,8 +2,9 @@
 
 import { useState } from 'react';
 
-export default function useSelect() {
+export default function useSelect(initialValue) {
 	const [toggle, setToggle] = useState(false);
+	const [selectedValue, setSelectedValue] = useState(initialValue);
 
 	const handleSelectClick = () => {
 		setToggle(false);
@@ -13,5 +14,5 @@ export default function useSelect() {
 		setToggle(!toggle);
 	};
 
-	return [toggle, setToggle, handleSelectClick, handleToggleSelect];
+	return [toggle, setToggle, selectedValue, setSelectedValue, handleSelectClick, handleToggleSelect];
 }

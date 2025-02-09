@@ -1,9 +1,7 @@
 'use client';
 
-import { useQuery } from '@tanstack/react-query';
-import { fetchKarts } from 'scripts/api/karts';
 import Tab from 'components/tabs/Tab';
-import { tabArray } from 'data/karts';
+import { tabArray, engineArray } from 'data/karts';
 import useTab from 'hooks/useTab';
 import Container from 'components/sub/grid/Container';
 import useSearch from 'hooks/useSearch';
@@ -14,28 +12,24 @@ import { useGetExcelQuries } from 'hooks/useGetExcelQuries';
 import GridSkeleton from 'components/skeleton/Grid';
 import { useEffect, useState } from 'react';
 import NoMatch from 'components/search/NoMatch';
+import Select from 'components/selects/Select';
+
+import * as G from 'style/components/sub/encyclopedia/Grid.style';
 
 export default function GridWrapper({ type }) {
 	const [containerActive, setContainerActive] = useState('');
-
-	const { data, isLoading, isError, isFetched } = useQuery({
-		queryKey: ['karts'],
-		queryFn: fetchKarts,
-		staleTime: 1000 * 60 * 60 * 12, // 12시간
-		gcTime: 1000 * 60 * 60 * 24, // 24시간
-		retry: 1,
-	});
+	let [selectKey, setSelectKey] = useState(engineArray);
 
 	const { kart_a2, kart_n1, character } = useGetExcelQuries();
 
-	console.log(kart_n1);
+	const [selectedEngine, setSelectedEngine] = useState(kart_a2.data);
 
 	const typeCondition = value => {
 		if (value === 'data') {
-			if (type === 'karts') return kart_n1;
-			if (type === 'characters') return character;
+			if (type === 'karts') return selectedEngine || [];
+			if (type === 'characters') return character.data || [];
 
-			return null;
+			return [];
 		}
 
 		if (value === 'tab') {
@@ -51,8 +45,17 @@ export default function GridWrapper({ type }) {
 	const { tabIndex, setTabIndex, clicked, setClicked, loadData, setLoadData } = useTab(typeCondition('data'), callback);
 	const dataObject = useSearchDataObject(typeCondition('data'), 'list', loadData);
 
-	const { value, setValue, results, focused, handleFocus, handleBlur, handleValueChange, handleValueRemove } =
-		useSearch(dataObject);
+	const {
+		value,
+		setValue,
+		results,
+		setResults,
+		focused,
+		handleFocus,
+		handleBlur,
+		handleValueChange,
+		handleValueRemove,
+	} = useSearch(dataObject);
 
 	function callback() {
 		if (tabIndex === 0) setLoadData('일반');
@@ -71,6 +74,13 @@ export default function GridWrapper({ type }) {
 		},
 	};
 
+	const queryObject = {
+		data: kart_a2.data || kart_n1.data || character.data,
+		isLoading: kart_a2.isLoading || kart_n1.isLoading || character.isLoading,
+		isError: kart_a2.isError || kart_n1.isError || character.isError,
+		isFetched: kart_a2.isFetched || kart_n1.isFetched || character.isFetched,
+	};
+
 	const commonProps = {
 		kartGradeData: loadData,
 		tabIndex: tabIndex,
@@ -79,15 +89,18 @@ export default function GridWrapper({ type }) {
 		clicked: clicked,
 		setClicked: setClicked,
 		setContainerActive: setContainerActive,
-		isLoading: isLoading,
+		isLoading: queryObject.isLoading,
 		dataType: 'list',
 	};
 
 	const dataPropsType = value.length > 0 ? dataProps.search : dataProps.ency;
 	const renderResults = useSearchRenderResults(commonProps, dataPropsType);
 
+	// console.log(commonProps.value);
+	// console.log('GridWrapper Results:', results);
+
 	const renderResultCondition = () => {
-		if (isLoading) {
+		if (queryObject.isLoading) {
 			return Array.from({ length: 10 }, (_, i) => <GridSkeleton key={i} />);
 		}
 
@@ -97,16 +110,41 @@ export default function GridWrapper({ type }) {
 			}
 		}
 
-		if (isFetched) {
+		if (queryObject.isFetched) {
 			return renderResults;
 		}
 	};
 
-	console.log(clicked);
+	useEffect(() => {
+		queryObject.isLoading ? setContainerActive('500px') : setContainerActive('auto');
+	}, [queryObject.data, tabIndex]);
 
 	useEffect(() => {
-		isLoading ? setContainerActive('500px') : setContainerActive('auto');
-	}, [data, tabIndex]);
+		setValue('');
+		setResults([]);
+	}, [tabIndex]);
+
+	useEffect(() => {
+		// selectKey가 바뀔 때만 데이터 업데이트
+		const isA2Selected = selectKey.includes('A2');
+		const isN1Selected = selectKey.includes('N1');
+
+		let selectedData = [];
+
+		if (isA2Selected && kart_a2.isFetched) {
+			selectedData = [...selectedData, ...kart_a2.data];
+		}
+
+		if (isN1Selected && kart_n1.isFetched) {
+			selectedData = [...selectedData, ...kart_n1.data];
+		}
+
+		// 상태 업데이트
+		setSelectedEngine(selectedData);
+		console.log(selectedData);
+	}, [selectKey, kart_a2.isFetched, kart_n1.isFetched, kart_a2.data, kart_n1.data]);
+
+	console.log(selectKey);
 
 	return (
 		<div className="reset">
@@ -125,22 +163,26 @@ export default function GridWrapper({ type }) {
 					indicator={true}
 				/>
 
-				<SearchItem
-					inputDisabled={isLoading ? true : false}
-					value={value}
-					focused={focused}
-					onFocusFn={handleFocus}
-					onBlurFn={handleBlur}
-					onChangeFn={handleValueChange}
-					removeFn={handleValueRemove}
-					placeholder={'어떤 걸 찾고 계세요?'}
-					inputId={'s02'}
-					styleProps="ency"
-					inputStyleClassName="encyInput"
-				/>
+				<G.SearchBox>
+					<Select data="engine" selectKey={selectKey} setSelectKey={setSelectKey} width="120px" height="36px" />
+
+					<SearchItem
+						inputDisabled={queryObject.isLoading ? true : false}
+						value={value}
+						focused={focused}
+						onFocusFn={handleFocus}
+						onBlurFn={handleBlur}
+						onChangeFn={handleValueChange}
+						removeFn={handleValueRemove}
+						placeholder={'어떤 걸 찾고 계세요?'}
+						inputId={'s02'}
+						styleProps="ency"
+						inputStyleClassName="encyInput"
+					/>
+				</G.SearchBox>
 			</Container>
 
-			<Container minHeight={containerActive} styleProp={isLoading ? 'grid' : ''}>
+			<Container minHeight={containerActive} styleProp={queryObject.isLoading ? 'grid' : ''}>
 				{renderResultCondition()}
 			</Container>
 		</div>

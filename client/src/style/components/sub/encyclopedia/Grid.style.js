@@ -130,3 +130,11 @@ export const Text = styled.strong`
 		white-space: pre-wrap;
 	`}
 `;
+
+export const SearchBox = styled.div`
+	display: flex;
+	align-items: center;
+	gap: 16px;
+	margin-bottom: 40px;
+	margin-left: auto;
+`

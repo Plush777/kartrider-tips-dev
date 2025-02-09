@@ -83,12 +83,9 @@ export const SearchInput = styled.input`
 export const SearchWrap = styled.div`
     display: flex;
     width: 100%;
-    padding-left: var(--sidebar-padding);
 
-    ${props => props.styleProps === 'ency' && css`
+    ${props => props.styleProps === 'ency' ? css`
         padding-left: 0;
-        margin-left: auto;
-        margin-bottom: 40px;
         max-width: 190px;
 
         ${SearchContainer} {
@@ -98,5 +95,7 @@ export const SearchWrap = styled.div`
         ${SearchWrapInner} {
             max-width: none;
         }
+    ` : css`
+        padding-left: var(--sidebar-padding);
     `}
 `

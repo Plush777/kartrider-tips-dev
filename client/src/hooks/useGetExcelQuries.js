@@ -21,10 +21,23 @@ export function useGetExcelQuries() {
 	});
 
 	return {
-		kart_a2: file1Query.data,
-		kart_n1: file2Query.data,
-		character: file3Query.data,
-		isLoading: file1Query.isLoading || file2Query.isLoading || file3Query.isLoading,
-		isError: file1Query.isError || file2Query.isError || file3Query.isError,
+		kart_a2: {
+			data: file1Query.data,
+			isLoading: file1Query.isLoading,
+			isError: file1Query.isError,
+			isFetched: file1Query.isFetched,
+		},
+		kart_n1: {
+			data: file2Query.data,
+			isLoading: file2Query.isLoading,
+			isError: file2Query.isError,
+			isFetched: file2Query.isFetched,
+		},
+		character: {
+			data: file3Query.data,
+			isLoading: file3Query.isLoading,
+			isError: file3Query.isError,
+			isFetched: file3Query.isFetched,
+		},
 	};
 }
