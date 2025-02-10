@@ -106,18 +106,22 @@ export default function GridWrapper({ type }) {
 			return Array.from({ length: 10 }, (_, i) => <GridSkeleton key={i} />);
 		}
 
-		//검색어가 있고, 결과가 없을 경우
-		// if (queryObject.isFetched && results.length === 0 && value.length < 0) {
-		// 	return <NoMatch styleProp="grid" text={'이런, 조건에 맞는 항목이 없네요!'} />;
-		// }
+		// 데이터가 로드되었을 때
+		if (queryObject.isFetched) {
+			// 검색 결과 체크
+			if (value.length > 0 && results.length === 0) {
+				if (!clicked.includes(true)) {
+					return <NoMatch styleProp="grid" text={'이런, 조건에 맞는 항목이 없네요!'} />;
+				}
+			}
 
-		if (value.length > 0 && results.length === 0) {
-			if (!clicked.includes(true)) {
+			// 선택된 엔진과 등급에 따른 데이터 체크
+			const currentGradeData = selectedEngine?.filter(item => item.등급 === loadData);
+
+			if (currentGradeData?.length === 0) {
 				return <NoMatch styleProp="grid" text={'이런, 조건에 맞는 항목이 없네요!'} />;
 			}
-		}
 
-		if (queryObject.isFetched) {
 			return renderResults;
 		}
 	};
