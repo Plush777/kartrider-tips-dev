@@ -14,9 +14,11 @@ export default function DetailsItem({ dataProps, commonProps, depth1, depth1Key,
 	const myHref = depth1 && depth1.depth2?.map(depth2 => depth2.href);
 
 	if (commonProps.dataType === 'sidebar') {
-		useLayoutEffect(() => {
-			myHref?.forEach(href => pathname === href && setIsActive('active'));
-		}, [pathname]);
+		useEffect(() => {
+			if (!isActive && myHref?.includes(pathname)) {
+				setIsActive('active');
+			}
+		}, [pathname, isActive]);
 
 		useEffect(() => {
 			if (isActive === 'active' || value.length > 0) {
@@ -27,9 +29,8 @@ export default function DetailsItem({ dataProps, commonProps, depth1, depth1Key,
 		}, [isActive, value]);
 	}
 
-	const clickAlert = message => {
-		return useClickAlert(message);
-	};
+	const alertMessage = useClickAlert();
+	const clickAlert = message => alertMessage(message);
 
 	const renderItem = (depthType, depth1, depth1Key) => {
 		if (depthType === 'noDepth') {

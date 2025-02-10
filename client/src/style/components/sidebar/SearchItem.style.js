@@ -86,7 +86,7 @@ export const SearchWrap = styled.div`
 
     ${props => props.styleProps === 'ency' ? css`
         padding-left: 0;
-        max-width: 190px;
+        max-width: 280px;
 
         ${SearchContainer} {
             justify-content: flex-end;

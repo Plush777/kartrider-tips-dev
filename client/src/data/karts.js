@@ -2,6 +2,13 @@ export const tabArray = ['일반', '고급', '희귀', '영웅', '전설'];
 
 export const statArray = ['부스터 가속', '드리프트 가속', '부스터 시간', '부스터 충전량'];
 
+export const engineArray = ['A2', 'N1'];
+
+export const modeArray = ['아이템', '스피드'];
+
+// 카트바디 도감 처음 진입 시 셀렉트 초기값
+export const encyInitArray = ['엔진 선택', '유형 선택'];
+
 export const backgroundCondition = type => {
 	switch (type) {
 		case '일반':
@@ -24,5 +31,3 @@ export const backgroundCondition = type => {
 			return 'gray';
 	}
 };
-
-export const engineArray = ['A2', 'N1'];

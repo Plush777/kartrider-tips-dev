@@ -51,7 +51,7 @@ export default function Grid({ data, commonProps }) {
 	return (
 		<G.Wrap>
 			<G.List>
-				{displayData?.map((item, index) => {
+				{displayData.map((item, index) => {
 					const toggle = toggleArray[index];
 
 					return (

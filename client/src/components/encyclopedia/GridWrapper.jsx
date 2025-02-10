@@ -1,7 +1,7 @@
 'use client';
 
 import Tab from 'components/tabs/Tab';
-import { tabArray, engineArray } from 'data/karts';
+import { tabArray, engineArray, modeArray, encyInitArray } from 'data/karts';
 import useTab from 'hooks/useTab';
 import Container from 'components/sub/grid/Container';
 import useSearch from 'hooks/useSearch';
@@ -18,7 +18,9 @@ import * as G from 'style/components/sub/encyclopedia/Grid.style';
 
 export default function GridWrapper({ type }) {
 	const [containerActive, setContainerActive] = useState('');
-	let [selectKey, setSelectKey] = useState(engineArray);
+	let [engineKey, setEngineKey] = useState(engineArray);
+	let [modeKey, setModeKey] = useState(modeArray);
+	// let [selectedData] = useState(undefined);
 
 	const { kart_a2, kart_n1, character } = useGetExcelQuries();
 
@@ -104,9 +106,14 @@ export default function GridWrapper({ type }) {
 			return Array.from({ length: 10 }, (_, i) => <GridSkeleton key={i} />);
 		}
 
+		//검색어가 있고, 결과가 없을 경우
+		// if (queryObject.isFetched && results.length === 0 && value.length < 0) {
+		// 	return <NoMatch styleProp="grid" text={'이런, 조건에 맞는 항목이 없네요!'} />;
+		// }
+
 		if (value.length > 0 && results.length === 0) {
 			if (!clicked.includes(true)) {
-				return <NoMatch styleProp="grid" text={'이런, 데이터가 없네요!'} />;
+				return <NoMatch styleProp="grid" text={'이런, 조건에 맞는 항목이 없네요!'} />;
 			}
 		}
 
@@ -119,15 +126,19 @@ export default function GridWrapper({ type }) {
 		queryObject.isLoading ? setContainerActive('500px') : setContainerActive('auto');
 	}, [queryObject.data, tabIndex]);
 
+	//탭 넘기면 검색값과 셀렉트 값 초기화
 	useEffect(() => {
 		setValue('');
 		setResults([]);
 	}, [tabIndex]);
 
 	useEffect(() => {
-		// selectKey가 바뀔 때만 데이터 업데이트
-		const isA2Selected = selectKey.includes('A2');
-		const isN1Selected = selectKey.includes('N1');
+		// key가 바뀔 때만 데이터 업데이트
+		const isA2Selected = engineKey.includes('A2');
+		const isN1Selected = engineKey.includes('N1');
+
+		const isItemModeSelected = modeKey && modeKey.includes('아이템');
+		const isSpeedModeSelected = modeKey && modeKey.includes('스피드');
 
 		let selectedData = [];
 
@@ -139,12 +150,14 @@ export default function GridWrapper({ type }) {
 			selectedData = [...selectedData, ...kart_n1.data];
 		}
 
+		selectedData = selectedData.filter(item => {
+			return (isItemModeSelected && item.모드구분 === '아이템') || (isSpeedModeSelected && item.모드구분 === '스피드');
+		});
+
 		// 상태 업데이트
 		setSelectedEngine(selectedData);
-		console.log(selectedData);
-	}, [selectKey, kart_a2.isFetched, kart_n1.isFetched, kart_a2.data, kart_n1.data]);
-
-	console.log(selectKey);
+		console.log(selectedEngine);
+	}, [engineKey, modeKey, kart_a2.isFetched, kart_n1.isFetched, kart_a2.data, kart_n1.data]);
 
 	return (
 		<div className="reset">
@@ -164,7 +177,26 @@ export default function GridWrapper({ type }) {
 				/>
 
 				<G.SearchBox>
-					<Select data="engine" selectKey={selectKey} setSelectKey={setSelectKey} width="120px" height="36px" />
+					{type === 'karts' && (
+						<>
+							<Select
+								data="engine"
+								initKey={encyInitArray}
+								selectKey={engineKey}
+								setSelectKey={setEngineKey}
+								width="120px"
+								height="36px"
+							/>
+							<Select
+								data="mode"
+								initKey={encyInitArray}
+								selectKey={modeKey}
+								setSelectKey={setModeKey}
+								width="120px"
+								height="36px"
+							/>
+						</>
+					)}
 
 					<SearchItem
 						inputDisabled={queryObject.isLoading ? true : false}
@@ -174,7 +206,7 @@ export default function GridWrapper({ type }) {
 						onBlurFn={handleBlur}
 						onChangeFn={handleValueChange}
 						removeFn={handleValueRemove}
-						placeholder={'어떤 걸 찾고 계세요?'}
+						placeholder={'찾고싶은 카트바디를 검색해보세요!'}
 						inputId={'s02'}
 						styleProps="ency"
 						inputStyleClassName="encyInput"

@@ -7,12 +7,11 @@ import useClickOutside from 'hooks/useClickOutside';
 import { channels, sites } from 'data/select';
 import { useEffect, useState } from 'react';
 import { youtubeId } from 'const';
-import { engineArray } from 'data/karts';
+import { engineArray, modeArray, encyInitArray } from 'data/karts';
 
-export default function Select({ width, height, selectKey, setSelectKey, data }) {
-	const [toggle, setToggle, selectedValue, setSelectedValue, handleSelectClick, handleToggleSelect] = useSelect(
-		selectKey && selectKey[0],
-	);
+export default function Select({ width, height, selectKey, setSelectKey, initKey, data }) {
+	const [toggle, setToggle, selectedValue, setSelectedValue, handleSelectClick, handleToggleSelect] =
+		useSelect(initKey);
 	let [randomChannelIndex, setRandomChannelIndex] = useState(undefined);
 
 	const selectClose = () => {
@@ -34,6 +33,7 @@ export default function Select({ width, height, selectKey, setSelectKey, data })
 
 			return undefined;
 		}
+
 		if (data === 'engine') {
 			if (index === 0) newKey = 'A2';
 			if (index === 1) newKey = 'N1';
@@ -46,29 +46,25 @@ export default function Select({ width, height, selectKey, setSelectKey, data })
 
 			return undefined;
 		}
+
+		if (data === 'mode') {
+			newKey = index === 0 ? '아이템' : '스피드';
+
+			setSelectedValue(newKey);
+			setSelectKey(newKey);
+		}
 	};
 
 	const handleSelectPosTop = () => {
-		if (data === 'sites') {
-			return '-153px';
-		}
-
-		if (data === 'channels' || data === 'engine') {
-			return '40px';
-		}
-
+		if (data === 'sites') return '-153px';
+		if (['channels', 'engine', 'mode'].includes(data)) return '40px';
 		return null;
 	};
 
 	const renderData = () => {
-		if (data === 'channels') {
-			return channels;
-		}
-
-		if (data === 'engine') {
-			return engineArray;
-		}
-
+		if (data === 'channels') return channels;
+		if (data === 'engine') return engineArray;
+		if (data === 'mode') return modeArray;
 		return undefined;
 	};
 
@@ -88,26 +84,21 @@ export default function Select({ width, height, selectKey, setSelectKey, data })
 			});
 		}
 
-		if (data === 'channels' || data === 'engine') {
-			return (
-				selectData &&
-				selectData.map((channelItem, index) => {
-					return (
-						<Selectstyled.OptionItem key={index}>
-							<Selectstyled.OptionText
-								as="button"
-								type="button"
-								onClick={() => {
-									handleSelectClick();
-									handleSelectKey(index);
-								}}
-							>
-								{channelItem}
-							</Selectstyled.OptionText>
-						</Selectstyled.OptionItem>
-					);
-				})
-			);
+		if (['channels', 'engine', 'mode'].includes(data)) {
+			return selectData?.map((item, index) => (
+				<Selectstyled.OptionItem key={index}>
+					<Selectstyled.OptionText
+						as="button"
+						type="button"
+						onClick={() => {
+							handleSelectClick();
+							handleSelectKey(index);
+						}}
+					>
+						{item}
+					</Selectstyled.OptionText>
+				</Selectstyled.OptionItem>
+			));
 		}
 
 		return null;
@@ -116,24 +107,22 @@ export default function Select({ width, height, selectKey, setSelectKey, data })
 	useEffect(() => {
 		if (data === 'channels') {
 			if (selectKey === youtubeId.한상현) setRandomChannelIndex(0);
-			else if (selectKey === youtubeId.아라양) setRandomChannelIndex(1);
-			else if (selectKey === youtubeId.정너굴) setRandomChannelIndex(2);
-			else if (selectKey === youtubeId.카트라이더드리프트) setRandomChannelIndex(3);
+			if (selectKey === youtubeId.아라양) setRandomChannelIndex(1);
+			if (selectKey === youtubeId.정너굴) setRandomChannelIndex(2);
+			if (selectKey === youtubeId.카트라이더드리프트) setRandomChannelIndex(3);
 		}
 	}, [selectKey]);
 
+	// console.log(selectedValue);
+
 	const renderSelectText = () => {
-		if (data === 'sites') {
-			return '관련 사이트';
-		}
+		if (data === 'sites') return '관련 사이트';
+		if (data === 'channels') return channels[randomChannelIndex];
 
-		if (data === 'channels') {
-			return channels[randomChannelIndex];
-		}
+		// 카트바디 도감 처음 진입 시 셀렉트 초기값 설정
+		if (data === 'engine') return selectedValue === encyInitArray ? encyInitArray[0] : selectedValue;
+		if (data === 'mode') return selectedValue === encyInitArray ? encyInitArray[1] : selectedValue;
 
-		if (data === 'engine') {
-			return selectedValue;
-		}
 		return null;
 	};
 

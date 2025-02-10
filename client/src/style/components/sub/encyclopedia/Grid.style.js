@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components';
 
 export const Wrap = styled.div`
 	position: relative;
+	
 `;
 
 export const List = styled.ul`
@@ -134,7 +135,8 @@ export const Text = styled.strong`
 export const SearchBox = styled.div`
 	display: flex;
 	align-items: center;
+	justify-content: flex-end;
 	gap: 16px;
 	margin-bottom: 40px;
-	margin-left: auto;
+	width: 100%;
 `
