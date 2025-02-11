@@ -7,12 +7,12 @@ import Container from 'components/sub/grid/Container';
 import useSearch from 'hooks/useSearch';
 import SearchItem from 'components/search/SearchItem';
 import useSearchDataObject from 'hooks/useSearchDataObject';
-import useSearchRenderResults from 'hooks/useSearchRenderResults';
 import { useGetExcelQuries } from 'hooks/useGetExcelQuries';
 import GridSkeleton from 'components/skeleton/Grid';
 import { useEffect, useState } from 'react';
 import NoMatch from 'components/search/NoMatch';
 import Select from 'components/selects/Select';
+import SearchResult from 'components/search/SearchResult';
 
 import * as G from 'style/components/sub/encyclopedia/Grid.style';
 
@@ -95,8 +95,9 @@ export default function GridWrapper({ type }) {
 		dataType: 'list',
 	};
 
+	console.log(commonProps);
+
 	const dataPropsType = value.length > 0 ? dataProps.search : dataProps.ency;
-	const renderResults = useSearchRenderResults(commonProps, dataPropsType);
 
 	// console.log(commonProps.value);
 	// console.log('GridWrapper Results:', results);
@@ -122,7 +123,7 @@ export default function GridWrapper({ type }) {
 				return <NoMatch styleProp="grid" text={'이런, 조건에 맞는 항목이 없네요!'} />;
 			}
 
-			return renderResults;
+			return <SearchResult commonProps={commonProps} dataProps={dataPropsType} />;
 		}
 	};
 
