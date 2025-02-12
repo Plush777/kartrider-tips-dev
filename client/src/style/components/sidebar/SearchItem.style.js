@@ -98,4 +98,8 @@ export const SearchWrap = styled.div`
     ` : css`
         padding-left: var(--sidebar-padding);
     `}
+
+    @media screen and (max-width: 600px) {
+		max-width: none;
+	}
 `

@@ -1,6 +1,6 @@
 import * as G from 'style/components/sub/encyclopedia/Grid.style';
 import Image from 'next/image';
-import { backgroundCondition } from 'data/karts';
+import { backgroundCondition, kartImageSrcCondition, characterImageSrcCondition } from 'data/karts';
 import SCMinus from 'svg/ico-collapse-minus.svg';
 import SCPlus from 'svg/ico-collapse-plus.svg';
 import NoImage from 'components/sub/grid/NoImage';
@@ -9,25 +9,37 @@ import { publicImageSrc } from 'const';
 
 export default function GridItem({ item, toggle, onToggle }) {
 	const { loaded, imageError, handleImageError, loadingComplete } = useImageLoad();
+	const itemName = item.아이템명;
+	const itemNameResult = itemName.includes('A2')
+		? itemName.replace('A2', '').replace(/\s/g, '')
+		: itemName.replace(/\s/g, '');
+
+	console.log(itemNameResult);
 
 	return (
-		<G.InnerItem className={`${loaded || !imageError ? 'loaded' : ''}`}>
-			{item.img && !imageError ? (
+		<G.InnerItem className={`loaded`}>
+			{item ? (
 				<G.ImgDiv>
-					{item.type && <G.Tag className={`gridTag ${backgroundCondition(item.type)}`}>{item.type}</G.Tag>}
+					{item.타입 && <G.Tag className={`gridTag ${backgroundCondition(item.타입)}`}>{item.타입}</G.Tag>}
 					<Image
 						className="gridImage"
 						onLoadingComplete={loadingComplete}
 						onError={handleImageError}
-						src={item.stat ? item.img : `${item.img}.webp`}
+						src={
+							item.엔진
+								? kartImageSrcCondition(item.엔진, itemNameResult)
+								: characterImageSrcCondition(item.아이템명, itemNameResult)
+						}
 						width={240}
 						height={200}
-						alt={item.name}
+						alt={item.아이템명}
 					/>
 				</G.ImgDiv>
 			) : (
 				<NoImage width={86} height={80} src={publicImageSrc.noImage.kris} />
 			)}
+
+			{/* {imageError && <NoImage width={86} height={80} src={publicImageSrc.noImage.kris} />} */}
 
 			<G.Box>
 				<G.InnerBox>

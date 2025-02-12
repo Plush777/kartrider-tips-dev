@@ -56,6 +56,12 @@ export const TabWrap = styled.div`
 			${TabDiv} {
 				font-size: 1.25rem;
 			}
+
+			@media screen and (max-width:600px){
+				${TabDiv} {
+				font-size: 1.125rem;
+			}
+			}
 		`}
 
 	${props =>

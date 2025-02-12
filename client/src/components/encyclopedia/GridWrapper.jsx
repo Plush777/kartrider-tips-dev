@@ -84,7 +84,7 @@ export default function GridWrapper({ type }) {
 	};
 
 	const commonProps = {
-		kartGradeData: loadData,
+		currentGrade: loadData,
 		tabIndex: tabIndex,
 		value: value,
 		setValue: setValue,
@@ -93,6 +93,7 @@ export default function GridWrapper({ type }) {
 		setContainerActive: setContainerActive,
 		isLoading: queryObject.isLoading,
 		dataType: 'list',
+		dataCategory: type,
 	};
 
 	console.log(commonProps);
@@ -103,23 +104,29 @@ export default function GridWrapper({ type }) {
 	// console.log('GridWrapper Results:', results);
 
 	const renderResultCondition = () => {
+		// 데이터 로딩 중이면 스켈레톤 UI 표시
 		if (queryObject.isLoading) {
 			return Array.from({ length: 10 }, (_, i) => <GridSkeleton key={i} />);
 		}
 
-		// 데이터가 로드되었을 때
+		// 데이터가 로드된 후 실행
 		if (queryObject.isFetched) {
-			// 검색 결과 체크
+			// 🔹 검색 결과가 없을 때
 			if (value.length > 0 && results.length === 0) {
 				if (!clicked.includes(true)) {
 					return <NoMatch styleProp="grid" text={'이런, 조건에 맞는 항목이 없네요!'} />;
 				}
 			}
 
-			// 선택된 엔진과 등급에 따른 데이터 체크
+			// 🔹 데이터가 완전히 준비되었는지 체크
+			if (!selectedEngine || selectedEngine.length === 0) {
+				return <GridSkeleton />; // 데이터를 아직 불러오는 중이라면 스켈레톤 유지
+			}
+
+			// 🔹 선택된 엔진과 등급에 따른 데이터 체크
 			const currentGradeData = selectedEngine?.filter(item => item.등급 === loadData);
 
-			if (currentGradeData?.length === 0) {
+			if (queryObject.isFetched && selectedEngine.length > 0 && currentGradeData?.length === 0) {
 				return <NoMatch styleProp="grid" text={'이런, 조건에 맞는 항목이 없네요!'} />;
 			}
 
@@ -161,8 +168,17 @@ export default function GridWrapper({ type }) {
 
 		// 상태 업데이트
 		setSelectedEngine(selectedData);
+
+		//selectedEngine이 업데이트될 때마다 검색 결과(results)도 다시 필터링
+		if (value.length > 0) {
+			const newResults = selectedData.filter(item => {
+				return item.아이템명.toLowerCase().includes(value.toLowerCase()) && item.등급 === loadData;
+			});
+			setResults(newResults);
+		}
+
 		console.log(selectedEngine);
-	}, [engineKey, modeKey, kart_a2.isFetched, kart_n1.isFetched, kart_a2.data, kart_n1.data]);
+	}, [engineKey, modeKey, kart_a2.isFetched, kart_n1.isFetched, kart_a2.data, kart_n1.data, value, loadData]);
 
 	return (
 		<div className="reset">

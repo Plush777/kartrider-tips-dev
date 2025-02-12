@@ -139,4 +139,8 @@ export const SearchBox = styled.div`
 	gap: 16px;
 	margin-bottom: 40px;
 	width: 100%;
+
+	@media screen and (max-width: 600px) {
+		flex-direction: column;
+	}
 `
