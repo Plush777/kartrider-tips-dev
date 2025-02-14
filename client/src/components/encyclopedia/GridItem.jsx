@@ -17,11 +17,11 @@ export default function GridItem({ item, toggle, onToggle }) {
 	console.log(itemNameResult);
 
 	return (
-		<G.InnerItem className={`loaded`}>
+		<G.InnerItem className={`${loaded || !imageError ? 'loaded' : ''}`}>
 			{item ? (
 				<G.ImgDiv>
 					{item.타입 && <G.Tag className={`gridTag ${backgroundCondition(item.타입)}`}>{item.타입}</G.Tag>}
-					<Image
+					{/* <Image
 						className="gridImage"
 						onLoadingComplete={loadingComplete}
 						onError={handleImageError}
@@ -33,7 +33,7 @@ export default function GridItem({ item, toggle, onToggle }) {
 						width={240}
 						height={200}
 						alt={item.아이템명}
-					/>
+					/> */}
 				</G.ImgDiv>
 			) : (
 				<NoImage width={86} height={80} src={publicImageSrc.noImage.kris} />

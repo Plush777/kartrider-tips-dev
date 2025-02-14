@@ -76,12 +76,27 @@ export default function GridWrapper({ type }) {
 		},
 	};
 
-	const queryObject = {
-		data: kart_a2.data || kart_n1.data || character.data,
-		isLoading: kart_a2.isLoading || kart_n1.isLoading || character.isLoading,
-		isError: kart_a2.isError || kart_n1.isError || character.isError,
-		isFetched: kart_a2.isFetched || kart_n1.isFetched || character.isFetched,
+	const queryObjectCondition = () => {
+		if (type === 'karts') {
+			return {
+				data: kart_a2.data || kart_n1.data,
+				isLoading: kart_a2.isLoading || kart_n1.isLoading,
+				isError: kart_a2.isError || kart_n1.isError,
+				isFetched: kart_a2.isFetched || kart_n1.isFetched,
+			};
+		}
+
+		if (type === 'characters') {
+			return {
+				data: character.data,
+				isLoading: character.isLoading,
+				isError: character.isError,
+				isFetched: character.isFetched,
+			};
+		}
 	};
+
+	const queryObject = queryObjectCondition();
 
 	const commonProps = {
 		currentGrade: loadData,
@@ -132,6 +147,13 @@ export default function GridWrapper({ type }) {
 
 			return <SearchResult commonProps={commonProps} dataProps={dataPropsType} />;
 		}
+	};
+
+	const placeholderCondition = props => {
+		if (props === 'karts') return '카트바디';
+		if (props === 'characters') return '캐릭터';
+
+		return null;
 	};
 
 	useEffect(() => {
@@ -227,7 +249,7 @@ export default function GridWrapper({ type }) {
 						onBlurFn={handleBlur}
 						onChangeFn={handleValueChange}
 						removeFn={handleValueRemove}
-						placeholder={'찾고싶은 카트바디를 검색해보세요!'}
+						placeholder={`찾고싶은 ${placeholderCondition(commonProps.dataCategory)}를 검색해보세요!`}
 						inputId={'s02'}
 						styleProps="ency"
 						inputStyleClassName="encyInput"
