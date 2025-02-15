@@ -12,7 +12,7 @@ export function filterData(dataArray, searchValue) {
 export const sidebarfilterData = (dataObject, query) => {
 	if (!query) return [];
 
-	const { data, type: dataType, optionalData } = dataObject;
+	const { data, type: dataType } = dataObject;
 
 	const lowerCaseQuery = query.toLowerCase();
 

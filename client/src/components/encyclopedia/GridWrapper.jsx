@@ -1,38 +1,34 @@
 'use client';
 
-import Tab from 'components/tabs/Tab';
-import { tabArray, engineArray, modeArray, encyInitArray } from 'data/karts';
-import useTab from 'hooks/useTab';
-import Container from 'components/sub/grid/Container';
-import useSearch from 'hooks/useSearch';
-import SearchItem from 'components/search/SearchItem';
-import useSearchDataObject from 'hooks/useSearchDataObject';
-import { useGetExcelQuries } from 'hooks/useGetExcelQuries';
-import GridSkeleton from 'components/skeleton/Grid';
 import { useEffect, useState } from 'react';
+
+import Tab from 'components/tabs/Tab';
+import Container from 'components/sub/grid/Container';
 import NoMatch from 'components/search/NoMatch';
 import Select from 'components/selects/Select';
-import SearchResult from 'components/search/SearchResult';
+import Grid from 'components/encyclopedia/Grid';
+import Result from 'components/encyclopedia/Result';
+import SearchItem from 'components/search/SearchItem';
+import GridSkeleton from 'components/skeleton/Grid';
+
+import useSearch from 'hooks/useSearch';
+import useTab from 'hooks/useTab';
+import { useGetExcelQuries } from 'hooks/useGetExcelQuries';
 
 import * as G from 'style/components/sub/encyclopedia/Grid.style';
+
+import { tabArray, engineArray, modeArray, encyInitArray } from 'data/karts';
 
 export default function GridWrapper({ type }) {
 	const [containerActive, setContainerActive] = useState('');
 	let [engineKey, setEngineKey] = useState(engineArray);
 	let [modeKey, setModeKey] = useState(modeArray);
-	// let [selectedData] = useState(undefined);
+	const [selectedData, setSelectedData] = useState([]);
 
 	const { kart_a2, kart_n1, character } = useGetExcelQuries();
 
-	const [selectedEngine, setSelectedEngine] = useState(kart_a2.data);
-
-	const typeCondition = value => {
-		if (value === 'data') {
-			if (type === 'karts') return selectedEngine || [];
-			if (type === 'characters') return character.data || [];
-
-			return [];
-		}
+	function resultTypeCondition(value) {
+		if (value === 'data') return selectedData;
 
 		if (value === 'tab') {
 			if (type === 'karts') return 3;
@@ -42,10 +38,9 @@ export default function GridWrapper({ type }) {
 		}
 
 		return null;
-	};
+	}
 
-	const { tabIndex, setTabIndex, clicked, setClicked, loadData, setLoadData } = useTab(typeCondition('data'), callback);
-	const dataObject = useSearchDataObject(typeCondition('data'), 'list', loadData);
+	const { tabIndex, setTabIndex, clicked, setClicked, loadData } = useTab(resultTypeCondition('data'));
 
 	const {
 		value,
@@ -57,19 +52,11 @@ export default function GridWrapper({ type }) {
 		handleBlur,
 		handleValueChange,
 		handleValueRemove,
-	} = useSearch(dataObject);
-
-	function callback() {
-		if (tabIndex === 0) setLoadData('일반');
-		if (tabIndex === 1) setLoadData('고급');
-		if (tabIndex === 2) setLoadData('희귀');
-		if (tabIndex === 3) setLoadData('영웅');
-		if (tabIndex === 4) setLoadData('전설');
-	}
+	} = useSearch(resultTypeCondition('data'), type, loadData);
 
 	const dataProps = {
 		ency: {
-			loopData: typeCondition('data'),
+			loopData: resultTypeCondition('data'),
 		},
 		search: {
 			loopData: results,
@@ -79,14 +66,12 @@ export default function GridWrapper({ type }) {
 	const queryObjectCondition = () => {
 		if (type === 'karts') {
 			return {
-				data: kart_a2.data || kart_n1.data,
-				isLoading: kart_a2.isLoading || kart_n1.isLoading,
-				isError: kart_a2.isError || kart_n1.isError,
-				isFetched: kart_a2.isFetched || kart_n1.isFetched,
+				data: kart_a2.data,
+				isLoading: kart_a2.isLoading,
+				isError: kart_a2.isError,
+				isFetched: kart_a2.isFetched,
 			};
-		}
-
-		if (type === 'characters') {
+		} else if (type === 'characters') {
 			return {
 				data: character.data,
 				isLoading: character.isLoading,
@@ -97,6 +82,7 @@ export default function GridWrapper({ type }) {
 	};
 
 	const queryObject = queryObjectCondition();
+	const queryObjectIsLoading = queryObject.isLoading;
 
 	const commonProps = {
 		currentGrade: loadData,
@@ -106,59 +92,29 @@ export default function GridWrapper({ type }) {
 		clicked: clicked,
 		setClicked: setClicked,
 		setContainerActive: setContainerActive,
-		isLoading: queryObject.isLoading,
+		isLoading: queryObjectIsLoading,
 		dataType: 'list',
 		dataCategory: type,
 	};
 
-	console.log(commonProps);
-
-	const dataPropsType = value.length > 0 ? dataProps.search : dataProps.ency;
-
-	// console.log(commonProps.value);
-	// console.log('GridWrapper Results:', results);
-
-	const renderResultCondition = () => {
-		// 데이터 로딩 중이면 스켈레톤 UI 표시
-		if (queryObject.isLoading) {
-			return Array.from({ length: 10 }, (_, i) => <GridSkeleton key={i} />);
-		}
-
-		// 데이터가 로드된 후 실행
-		if (queryObject.isFetched) {
-			// 🔹 검색 결과가 없을 때
-			if (value.length > 0 && results.length === 0) {
-				if (!clicked.includes(true)) {
-					return <NoMatch styleProp="grid" text={'이런, 조건에 맞는 항목이 없네요!'} />;
-				}
-			}
-
-			// 🔹 데이터가 완전히 준비되었는지 체크
-			if (!selectedEngine || selectedEngine.length === 0) {
-				return <GridSkeleton />; // 데이터를 아직 불러오는 중이라면 스켈레톤 유지
-			}
-
-			// 🔹 선택된 엔진과 등급에 따른 데이터 체크
-			const currentGradeData = selectedEngine?.filter(item => item.등급 === loadData);
-
-			if (queryObject.isFetched && selectedEngine.length > 0 && currentGradeData?.length === 0) {
-				return <NoMatch styleProp="grid" text={'이런, 조건에 맞는 항목이 없네요!'} />;
-			}
-
-			return <SearchResult commonProps={commonProps} dataProps={dataPropsType} />;
-		}
-	};
-
-	const placeholderCondition = props => {
+	function placeholderCondition(props) {
 		if (props === 'karts') return '카트바디';
 		if (props === 'characters') return '캐릭터';
 
 		return null;
-	};
+	}
 
 	useEffect(() => {
-		queryObject.isLoading ? setContainerActive('500px') : setContainerActive('auto');
+		queryObjectIsLoading ? setContainerActive('500px') : setContainerActive('auto');
 	}, [queryObject.data, tabIndex]);
+
+	useEffect(() => {
+		if (type === 'karts' && kart_a2.isFetched && kart_a2.data.length > 0) {
+			setSelectedData(kart_a2.data);
+		} else if (type === 'characters' && character.isFetched && character.data.length > 0) {
+			setSelectedData(character.data);
+		}
+	}, [type, kart_a2.isFetched, character.isFetched, kart_a2.data, character.data]);
 
 	//탭 넘기면 검색값과 셀렉트 값 초기화
 	useEffect(() => {
@@ -167,40 +123,50 @@ export default function GridWrapper({ type }) {
 	}, [tabIndex]);
 
 	useEffect(() => {
-		// key가 바뀔 때만 데이터 업데이트
-		const isA2Selected = engineKey.includes('A2');
-		const isN1Selected = engineKey.includes('N1');
+		if (type === 'karts') {
+			let filteredData = [];
 
-		const isItemModeSelected = modeKey && modeKey.includes('아이템');
-		const isSpeedModeSelected = modeKey && modeKey.includes('스피드');
+			if (kart_a2.isFetched && engineKey.includes('A2') && kart_a2.data.length > 0) {
+				filteredData = [...kart_a2.data];
+			}
+			if (kart_n1.isFetched && engineKey.includes('N1') && kart_n1.data.length > 0) {
+				filteredData = [...filteredData, ...kart_n1.data]; // 기존 데이터 유지하면서 추가
+			}
 
-		let selectedData = [];
-
-		if (isA2Selected && kart_a2.isFetched) {
-			selectedData = [...selectedData, ...kart_a2.data];
-		}
-
-		if (isN1Selected && kart_n1.isFetched) {
-			selectedData = [...selectedData, ...kart_n1.data];
-		}
-
-		selectedData = selectedData.filter(item => {
-			return (isItemModeSelected && item.모드구분 === '아이템') || (isSpeedModeSelected && item.모드구분 === '스피드');
-		});
-
-		// 상태 업데이트
-		setSelectedEngine(selectedData);
-
-		//selectedEngine이 업데이트될 때마다 검색 결과(results)도 다시 필터링
-		if (value.length > 0) {
-			const newResults = selectedData.filter(item => {
-				return item.아이템명.toLowerCase().includes(value.toLowerCase()) && item.등급 === loadData;
+			// 🔹 모드 필터링
+			filteredData = filteredData.filter(item => {
+				if (modeKey.includes('아이템') && item.모드구분 === '아이템') return true;
+				if (modeKey.includes('스피드') && item.모드구분 === '스피드') return true;
+				return false;
 			});
-			setResults(newResults);
-		}
 
-		console.log(selectedEngine);
-	}, [engineKey, modeKey, kart_a2.isFetched, kart_n1.isFetched, kart_a2.data, kart_n1.data, value, loadData]);
+			setSelectedData(filteredData);
+		}
+	}, [engineKey, modeKey, kart_a2.isFetched, kart_n1.isFetched, kart_a2.data, kart_n1.data]);
+
+	// 🔹 선택된 엔진과 등급에 따른 데이터 체크
+	const currentGradeData = selectedData.filter(item => {
+		return item.등급.trim() === loadData.trim();
+	});
+
+	const noMatchClicked = queryObject.isFetched && value.length > 0 && results.length === 0 && !clicked.includes(true);
+	const noMatchGradeData =
+		queryObject.isFetched && selectedData.length > 0 && (!currentGradeData || currentGradeData.length === 0);
+	const sidebarResult = value.length > 0 ? dataProps.search : dataProps.ency;
+
+	function result() {
+		if (queryObject.isFetched) {
+			if (commonProps?.dataType === 'sidebar') {
+				return <Result result={sidebarResult} />;
+			} else if (commonProps?.dataType === 'list') {
+				return <Grid data={dataProps.ency.loopData} commonProps={commonProps} />;
+			}
+		}
+	}
+
+	useEffect(() => {
+		console.log('📌 [selectedData 업데이트됨]:', selectedData);
+	}, [selectedData]);
 
 	return (
 		<div className="reset">
@@ -214,7 +180,7 @@ export default function GridWrapper({ type }) {
 					setClicked={setClicked}
 					data={tabArray}
 					marginBottom="15px"
-					disabledIndex={typeCondition('tab')}
+					disabledIndex={resultTypeCondition('tab')}
 					styleProps="ency"
 					indicator={true}
 				/>
@@ -242,7 +208,7 @@ export default function GridWrapper({ type }) {
 					)}
 
 					<SearchItem
-						inputDisabled={queryObject.isLoading ? true : false}
+						inputDisabled={queryObjectIsLoading ? true : false}
 						value={value}
 						focused={focused}
 						onFocusFn={handleFocus}
@@ -257,8 +223,11 @@ export default function GridWrapper({ type }) {
 				</G.SearchBox>
 			</Container>
 
-			<Container minHeight={containerActive} styleProp={queryObject.isLoading ? 'grid' : ''}>
-				{renderResultCondition()}
+			<Container minHeight={containerActive} styleProp={queryObjectIsLoading ? 'grid' : ''}>
+				{queryObjectIsLoading && Array.from({ length: 10 }, (_, i) => <GridSkeleton key={i} />)}
+				{noMatchClicked || (noMatchGradeData && <NoMatch styleProp="grid" text={'이런, 조건에 맞는 항목이 없네요!'} />)}
+
+				{result()}
 			</Container>
 		</div>
 	);

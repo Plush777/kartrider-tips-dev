@@ -8,7 +8,7 @@ export default function Grid({ data, commonProps }) {
 	const collapseRef = useRef([]);
 
 	console.log(data);
-	console.log(commonProps);
+	// console.log(commonProps);
 
 	// 현재 등급에 맞는 데이터 필터링
 	const filteredData = data?.filter(item => item.등급 === commonProps.currentGrade);
@@ -54,7 +54,7 @@ export default function Grid({ data, commonProps }) {
 	return (
 		<G.Wrap>
 			<G.List>
-				{displayData.map((item, index) => {
+				{displayData?.map((item, index) => {
 					const toggle = toggleArray[index];
 
 					return (

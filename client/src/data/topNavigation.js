@@ -1,7 +1,7 @@
 import { docsSlug } from 'const';
 
 export const changeLinkName = item => {
-	console.log(item);
+	// console.log(item);
 
 	if (item === 'intro') return '소개';
 

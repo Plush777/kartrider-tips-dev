@@ -1,21 +1,17 @@
 import * as S from 'style/components/sub/common/Sidebar.style';
 import SearchItem from 'components/search/SearchItem';
 import useSearch from 'hooks/useSearch';
-import useSearchDataObject from 'hooks/useSearchDataObject';
-import SearchResult from 'components/search/SearchResult';
+import Result from 'components/encyclopedia/Result';
 
 export default function Sidebar({ wrapClassName, dimmedClassName, data, children, sidebarRef }) {
-	const dataObject = useSearchDataObject(data);
+	const { value, results, focused, handleFocus, handleBlur, handleValueChange, handleValueRemove } = useSearch(data);
 
-	const { value, results, focused, handleFocus, handleBlur, handleValueChange, handleValueRemove } =
-		useSearch(dataObject);
+	console.log(data);
 
 	const commonProps = {
 		value: value,
 		dataType: 'sidebar',
 	};
-
-	const dataPropsType = value.length > 0 ? results : dataObject;
 
 	return (
 		<>
@@ -35,7 +31,7 @@ export default function Sidebar({ wrapClassName, dimmedClassName, data, children
 				</S.Top>
 				<S.Inner>
 					<S.GroupContainer>
-						<SearchResult commonProps={commonProps} dataProps={dataPropsType} />
+						<Result commonProps={commonProps} result={value.length > 0 ? results : data} />
 					</S.GroupContainer>
 				</S.Inner>
 			</S.Wrap>

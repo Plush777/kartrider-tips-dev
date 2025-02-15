@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { sidebarfilterData } from 'data/sidebar';
 
-export default function useSearch(dataObject) {
+export default function useSearch(data, type, tabLoadData) {
 	const [value, setValue] = useState('');
 	const [results, setResults] = useState([]);
 	const [focused, setFocused] = useState(false);
@@ -19,13 +19,14 @@ export default function useSearch(dataObject) {
 	const handleValueChange = e => {
 		setValue(e.target.value);
 
+		console.log(value);
+
 		// 데이터 타입에 따라 다른 필터링 로직 적용
-		if (dataObject?.type === 'list') {
+		if (type === 'list') {
 			// GridWrapper용 필터링
 			const filteredResults =
-				dataObject.data?.filter(
-					item =>
-						item.아이템명.toLowerCase().includes(e.target.value.toLowerCase()) && item.등급 === dataObject.loadData,
+				data?.filter(
+					item => item.아이템명.toLowerCase().includes(e.target.value.toLowerCase()) && item.등급 === tabLoadData,
 				) || [];
 			setResults(filteredResults);
 		} else {
@@ -33,8 +34,8 @@ export default function useSearch(dataObject) {
 			const sidebarResults =
 				sidebarfilterData(
 					{
-						data: dataObject.data,
-						type: dataObject.type,
+						data: data,
+						type: type,
 					},
 					e.target.value,
 				) || [];

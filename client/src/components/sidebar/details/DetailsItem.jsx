@@ -1,12 +1,10 @@
 import * as S from 'style/components/sub/common/Sidebar.style';
 import Link from 'next/link';
-import React, { useEffect, useLayoutEffect } from 'react';
+import React, { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
-import useClickAlert from 'hooks/useClickAlert';
-import Grid from 'components/encyclopedia/Grid';
 
-export default function DetailsItem({ dataProps, commonProps, depth1, depth1Key, depthType, value }) {
+export default function DetailsItem({ commonProps, depth1, depth1Key, depthType, value }) {
 	const pathname = usePathname();
 	const [isActive, setIsActive] = useState('');
 	const [detailOpen, setDetailOpen] = useState(false);
@@ -28,9 +26,6 @@ export default function DetailsItem({ dataProps, commonProps, depth1, depth1Key,
 			}
 		}, [isActive, value]);
 	}
-
-	const alertMessage = useClickAlert();
-	const clickAlert = message => alertMessage(message);
 
 	const renderItem = (depthType, depth1, depth1Key) => {
 		if (depthType === 'noDepth') {
@@ -70,13 +65,6 @@ export default function DetailsItem({ dataProps, commonProps, depth1, depth1Key,
 					</S.Details>
 				</S.DetailsOuterItem>
 			);
-		}
-
-		// console.log(dataProps.loopData);
-
-		/* 도감 페이지 검색  */
-		if (commonProps.dataType === 'list') {
-			return <Grid data={dataProps.loopData} commonProps={commonProps} />;
 		}
 	};
 

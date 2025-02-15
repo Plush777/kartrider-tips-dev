@@ -14,7 +14,7 @@ export default function GridItem({ item, toggle, onToggle }) {
 		? itemName.replace('A2', '').replace(/\s/g, '')
 		: itemName.replace(/\s/g, '');
 
-	console.log(itemNameResult);
+	// console.log(itemNameResult);
 
 	return (
 		<G.InnerItem className={`${loaded || !imageError ? 'loaded' : ''}`}>
