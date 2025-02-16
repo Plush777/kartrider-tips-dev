@@ -49,10 +49,12 @@ export const ImgDiv = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	transition: 0.3s ease-in-out;
 
 	img {
-		object-fit: contain;
+		object-fit: scale-down;
 		border-radius: 6px;
+		transition: 0.3s ease-in-out;
 	}
 `;
 

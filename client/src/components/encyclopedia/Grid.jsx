@@ -7,11 +7,11 @@ export default function Grid({ data, commonProps }) {
 	const [toggleArray, setToggleArray] = useState([]);
 	const collapseRef = useRef([]);
 
-	console.log(data);
+	// console.log(data);
 	// console.log(commonProps);
 
 	// 현재 등급에 맞는 데이터 필터링
-	const filteredData = data?.filter(item => item.등급 === commonProps.currentGrade);
+	const filteredData = data?.filter(item => item?.등급 === commonProps?.currentGrade) || [];
 
 	// 토글 배열 초기화
 	useEffect(() => {

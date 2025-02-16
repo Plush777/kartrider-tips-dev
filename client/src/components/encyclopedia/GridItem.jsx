@@ -14,32 +14,37 @@ export default function GridItem({ item, toggle, onToggle }) {
 		? itemName.replace('A2', '').replace(/\s/g, '')
 		: itemName.replace(/\s/g, '');
 
-	// console.log(itemNameResult);
+	console.log(itemNameResult);
+
+	const getImageSrc = () => {
+		try {
+			return item.엔진
+				? kartImageSrcCondition(item.엔진, itemNameResult)
+				: characterImageSrcCondition(item.아이템명, itemNameResult);
+		} catch (error) {
+			return null;
+		}
+	};
 
 	return (
 		<G.InnerItem className={`${loaded || !imageError ? 'loaded' : ''}`}>
-			{item ? (
-				<G.ImgDiv>
-					{item.타입 && <G.Tag className={`gridTag ${backgroundCondition(item.타입)}`}>{item.타입}</G.Tag>}
-					{/* <Image
+			<G.ImgDiv>
+				{item?.타입 && <G.Tag className={`gridTag ${backgroundCondition(item.타입)}`}>{item.타입}</G.Tag>}
+
+				{!imageError && getImageSrc() ? (
+					<Image
 						className="gridImage"
 						onLoadingComplete={loadingComplete}
 						onError={handleImageError}
-						src={
-							item.엔진
-								? kartImageSrcCondition(item.엔진, itemNameResult)
-								: characterImageSrcCondition(item.아이템명, itemNameResult)
-						}
+						src={getImageSrc()}
 						width={240}
 						height={200}
-						alt={item.아이템명}
-					/> */}
-				</G.ImgDiv>
-			) : (
-				<NoImage width={86} height={80} src={publicImageSrc.noImage.kris} />
-			)}
-
-			{/* {imageError && <NoImage width={86} height={80} src={publicImageSrc.noImage.kris} />} */}
+						alt={item?.아이템명 || '아이템 이미지'}
+					/>
+				) : (
+					<NoImage width={86} height={80} src={publicImageSrc.noImage.kris} />
+				)}
+			</G.ImgDiv>
 
 			<G.Box>
 				<G.InnerBox>
