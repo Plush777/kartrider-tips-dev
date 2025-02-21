@@ -13,13 +13,10 @@ import LoadingSpinner from 'components/loading/LoadingSpinner';
 export default function RecentNewsLayout({ data, isLoading, isError }) {
 	const { tabIndex, setTabIndex, loadData, setLoadData } = useTab(data, callback);
 
-	function callback() {
+	function callback(tabIndex, data, setLoadData) {
 		if (data) {
 			if (tabIndex === 0) {
-				data &&
-					data.news.sort((a, b) => {
-						return new Date(b.date) - new Date(a.date);
-					});
+				data.news.sort((a, b) => new Date(b.date) - new Date(a.date));
 				setLoadData(data.news);
 			}
 			if (tabIndex === 1) setLoadData(data.devArticles);
