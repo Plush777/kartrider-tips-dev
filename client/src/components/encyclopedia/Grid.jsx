@@ -58,7 +58,7 @@ export default function Grid({ data, commonProps }) {
 					const toggle = toggleArray[index];
 
 					return (
-						<G.Item key={index}>
+						<G.Item key={item.아이템명}>
 							<GridItem item={item} toggle={toggle} onToggle={() => handleToggle(index)} />
 
 							{toggle && <GridCollapse item={item} index={index} collapseRef={collapseRef} />}

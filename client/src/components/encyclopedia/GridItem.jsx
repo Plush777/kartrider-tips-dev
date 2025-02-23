@@ -8,7 +8,7 @@ import useImageLoad from 'hooks/useImageLoad';
 import { publicImageSrc } from 'const';
 
 export default function GridItem({ item, toggle, onToggle }) {
-	const { loaded, imageError, handleImageError, loadingComplete } = useImageLoad();
+	const { loadedMap, imageErrorMap, handleImageError, loadingComplete } = useImageLoad();
 	const itemName = item.아이템명;
 	const itemNameResult = itemName.includes('A2')
 		? itemName.replace('A2', '').replace(/\s/g, '')
@@ -27,16 +27,18 @@ export default function GridItem({ item, toggle, onToggle }) {
 	};
 
 	return (
-		<G.InnerItem className={`${loaded || !imageError ? 'loaded' : ''}`}>
+		<G.InnerItem>
 			<G.ImgDiv>
 				{item?.타입 && <G.Tag className={`gridTag ${backgroundCondition(item.타입)}`}>{item.타입}</G.Tag>}
 
-				{!imageError && getImageSrc() ? (
+				{!imageErrorMap[itemName] && getImageSrc() ? (
 					<Image
 						className="gridImage"
-						onLoadingComplete={loadingComplete}
-						onError={handleImageError}
+						onLoadingComplete={() => loadingComplete(itemName)}
+						onError={() => handleImageError(itemName)}
 						src={getImageSrc()}
+						// loading="lazy"
+						priority
 						width={240}
 						height={200}
 						alt={item?.아이템명 || '아이템 이미지'}

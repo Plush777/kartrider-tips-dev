@@ -22,26 +22,10 @@ export const Item = styled.li`
 `;
 
 export const InnerItem = styled.div`
-	.gridTag,
-	.gridImage,
-	.gridButton,
 	.noImageDiv {
-		opacity: 0;
-		transition: opacity 0.3s ease-in-out;
-	}
-
-	.noImageDiv {
-		padding: 31px 0;
+		width: 100%;
+		padding: 41px 0;
 		border-radius: 4px;
-	}
-
-	&.loaded {
-		.gridTag,
-		.gridImage,
-		.gridButton,
-		.noImageDiv {
-			opacity: 1;
-		}
 	}
 `;
 
@@ -53,6 +37,7 @@ export const ImgDiv = styled.div`
 
 	img {
 		object-fit: scale-down;
+		aspect-ratio: 16/9;
 		border-radius: 6px;
 		transition: 0.3s ease-in-out;
 	}

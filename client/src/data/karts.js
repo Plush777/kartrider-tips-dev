@@ -251,5 +251,17 @@ export const characterImageSrcCondition = (itemCharacter, itemName) => {
 		return `${prefix}/vivi/${itemName}.webp`;
 	}
 
+	if (itemCharacter.includes('더스트')) {
+		return `${prefix}/dust/${itemName}.webp`;
+	}
+
+	if (itemCharacter.includes('러비')) {
+		return `${prefix}/lovey/${itemName}.webp`;
+	}
+
+	if (itemCharacter.includes('타냐')) {
+		return `${prefix}/tanya/${itemName}.webp`;
+	}
+
 	return null;
 };
