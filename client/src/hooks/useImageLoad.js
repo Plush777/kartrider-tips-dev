@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
 export default function useImageLoad() {
-	const [loadedMap, setLoadedMap] = useState({});
 	const [imageErrorMap, setImageErrorMap] = useState({});
 
 	const handleImageError = itemId => {
@@ -11,12 +10,5 @@ export default function useImageLoad() {
 		}));
 	};
 
-	const loadingComplete = itemId => {
-		setLoadedMap(prev => ({
-			...prev,
-			[itemId]: true,
-		}));
-	};
-
-	return { loadedMap, imageErrorMap, handleImageError, loadingComplete };
+	return { imageErrorMap, handleImageError };
 }

@@ -23,7 +23,7 @@ export default function GridWrapper({ type }) {
 	const [containerActive, setContainerActive] = useState('');
 	let [engineKey, setEngineKey] = useState(engineArray);
 	let [modeKey, setModeKey] = useState(modeArray);
-	const [selectedData, setSelectedData] = useState([]);
+	const [selectedData, setSelectedData] = useState([]); //엔진 or 유형 선택 시 저장되는 state
 
 	const { kart_a2, kart_n1, character } = useGetExcelQuries();
 
@@ -85,16 +85,7 @@ export default function GridWrapper({ type }) {
 	const queryObjectIsLoading = queryObject.isLoading;
 
 	const commonProps = {
-		currentGrade: loadData,
-		tabIndex: tabIndex,
-		value: value,
-		setValue: setValue,
-		clicked: clicked,
-		setClicked: setClicked,
-		setContainerActive: setContainerActive,
-		isLoading: queryObjectIsLoading,
 		dataType: 'list',
-		dataCategory: type,
 	};
 
 	function placeholderCondition(props) {
@@ -104,8 +95,25 @@ export default function GridWrapper({ type }) {
 		return null;
 	}
 
+	function getTabFilteredData() {
+		if (!dataProps.ency.loopData) return [];
+
+		// 1. 먼저 등급에 따라 필터링
+		let filtered = dataProps.ency.loopData.filter(item => item?.등급 === loadData) || [];
+
+		// 2. 검색어가 있으면 검색어로 한번 더 필터링
+		if (value.length > 0) {
+			filtered = filtered.filter(item => item.아이템명.toLowerCase().includes(value.toLowerCase()));
+		}
+
+		return filtered;
+	}
+
+	const tabFilteredData = getTabFilteredData();
+
 	useEffect(() => {
 		queryObjectIsLoading ? setContainerActive('500px') : setContainerActive('auto');
+		console.log(containerActive);
 	}, [queryObject.data, tabIndex]);
 
 	useEffect(() => {
@@ -128,8 +136,7 @@ export default function GridWrapper({ type }) {
 
 			if (kart_a2.isFetched && engineKey.includes('A2') && kart_a2.data.length > 0) {
 				filteredData = [...kart_a2.data];
-			}
-			if (kart_n1.isFetched && engineKey.includes('N1') && kart_n1.data.length > 0) {
+			} else if (kart_n1.isFetched && engineKey.includes('N1') && kart_n1.data.length > 0) {
 				filteredData = [...filteredData, ...kart_n1.data]; // 기존 데이터 유지하면서 추가
 			}
 
@@ -144,14 +151,9 @@ export default function GridWrapper({ type }) {
 		}
 	}, [engineKey, modeKey, kart_a2.isFetched, kart_n1.isFetched, kart_a2.data, kart_n1.data]);
 
-	// 🔹 선택된 엔진과 등급에 따른 데이터 체크
-	const currentGradeData = selectedData.filter(item => {
-		return item.등급.trim() === loadData.trim();
-	});
+	const noMatchClicked =
+		(selectedData && value.length > 0) || (!selectedData && results.length === 0 && !clicked.includes(true));
 
-	const noMatchClicked = queryObject.isFetched && value.length > 0 && results.length === 0 && !clicked.includes(true);
-	const noMatchGradeData =
-		queryObject.isFetched && selectedData.length > 0 && (!currentGradeData || currentGradeData.length === 0);
 	const sidebarResult = value.length > 0 ? dataProps.search : dataProps.ency;
 
 	function result() {
@@ -159,7 +161,7 @@ export default function GridWrapper({ type }) {
 			if (commonProps?.dataType === 'sidebar') {
 				return <Result result={sidebarResult} />;
 			} else if (commonProps?.dataType === 'list') {
-				return <Grid data={dataProps.ency.loopData} commonProps={commonProps} />;
+				return <Grid data={tabFilteredData} />;
 			}
 		}
 	}
@@ -215,7 +217,7 @@ export default function GridWrapper({ type }) {
 						onBlurFn={handleBlur}
 						onChangeFn={handleValueChange}
 						removeFn={handleValueRemove}
-						placeholder={`찾고싶은 ${placeholderCondition(commonProps.dataCategory)}를 검색해보세요!`}
+						placeholder={`찾고싶은 ${placeholderCondition(type)}를 검색해보세요!`}
 						inputId={'s02'}
 						styleProps="ency"
 						inputStyleClassName="encyInput"
@@ -225,7 +227,7 @@ export default function GridWrapper({ type }) {
 
 			<Container minHeight={containerActive} styleProp={queryObjectIsLoading ? 'grid' : ''}>
 				{queryObjectIsLoading && Array.from({ length: 10 }, (_, i) => <GridSkeleton key={i} />)}
-				{noMatchClicked || (noMatchGradeData && <NoMatch styleProp="grid" text={'이런, 조건에 맞는 항목이 없네요!'} />)}
+				{noMatchClicked && <NoMatch styleProp="grid" text={'이런, 조건에 맞는 항목이 없네요!'} />}
 
 				{result()}
 			</Container>

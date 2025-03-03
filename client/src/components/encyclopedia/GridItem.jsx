@@ -8,13 +8,11 @@ import useImageLoad from 'hooks/useImageLoad';
 import { publicImageSrc } from 'const';
 
 export default function GridItem({ item, toggle, onToggle }) {
-	const { loadedMap, imageErrorMap, handleImageError, loadingComplete } = useImageLoad();
+	const { imageErrorMap, handleImageError } = useImageLoad();
 	const itemName = item.아이템명;
 	const itemNameResult = itemName.includes('A2')
 		? itemName.replace('A2', '').replace(/\s/g, '')
 		: itemName.replace(/\s/g, '');
-
-	console.log(itemNameResult);
 
 	const getImageSrc = () => {
 		try {
@@ -34,10 +32,8 @@ export default function GridItem({ item, toggle, onToggle }) {
 				{!imageErrorMap[itemName] && getImageSrc() ? (
 					<Image
 						className="gridImage"
-						onLoadingComplete={() => loadingComplete(itemName)}
 						onError={() => handleImageError(itemName)}
 						src={getImageSrc()}
-						// loading="lazy"
 						priority
 						width={240}
 						height={200}

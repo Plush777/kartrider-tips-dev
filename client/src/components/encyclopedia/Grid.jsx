@@ -3,23 +3,19 @@ import { useState, useEffect, useRef } from 'react';
 import GridItem from 'components/encyclopedia/GridItem';
 import GridCollapse from 'components/encyclopedia/GridCollapse';
 
-export default function Grid({ data, commonProps }) {
+export default function Grid({ data }) {
 	const [toggleArray, setToggleArray] = useState([]);
 	const collapseRef = useRef([]);
 
 	// console.log(data);
-	// console.log(commonProps);
-
-	// 현재 등급에 맞는 데이터 필터링
-	const filteredData = data?.filter(item => item?.등급 === commonProps?.currentGrade) || [];
 
 	// 토글 배열 초기화
 	useEffect(() => {
-		if (filteredData) {
-			const newToggleArray = Array.from({ length: filteredData.length }, () => false);
+		if (data) {
+			const newToggleArray = Array.from({ length: data.length }, () => false);
 			setToggleArray(newToggleArray);
 		}
-	}, [filteredData?.length]);
+	}, [data?.length]);
 
 	const handleToggle = index => {
 		const updatedArray = toggleArray.map((_, i) => {
@@ -46,15 +42,10 @@ export default function Grid({ data, commonProps }) {
 		}
 	};
 
-	const displayData =
-		commonProps.value.length > 0
-			? filteredData?.filter(item => item.아이템명.toLowerCase().includes(commonProps.value.toLowerCase()))
-			: filteredData;
-
 	return (
 		<G.Wrap>
 			<G.List>
-				{displayData?.map((item, index) => {
+				{data?.map((item, index) => {
 					const toggle = toggleArray[index];
 
 					return (
